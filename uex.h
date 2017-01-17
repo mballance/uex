@@ -64,7 +64,7 @@ int32_t uex_get_irq(uint32_t *drv_id);
 
 void uex_set_irq_handler(
 		uint32_t 		irq,
-		uex_irq_f		*f,
+		uex_irq_f		f,
 		void			*ud);
 
 #ifdef __cplusplus

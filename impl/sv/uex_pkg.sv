@@ -18,6 +18,7 @@ package uex_pkg;
 	uex_cond				m_cond_l[$];
 	int unsigned			m_active;
 	uex_thread				m_blocked[$];
+	semaphore				m_irq_sem = new(1);
 	
 	class uex_thread;
 		int unsigned		m_tid;
@@ -216,6 +217,13 @@ package uex_pkg;
 
 	import "DPI-C" context function int _uex_init();
 	int _initialized = _uex_init();
+	
+	task automatic uex_irq();
+		m_irq_sem.get(1);
+		_uex_irq();
+		m_irq_sem.put(1);
+	endtask
+	import "DPI-C" context task _uex_irq();
 
 endpackage
 

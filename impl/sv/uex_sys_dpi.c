@@ -18,6 +18,7 @@ void _uex_cond_signal(uint32_t c);
 void _uex_yield(void);
 int _uex_init(void);
 uint32_t _uex_thread_self(void);
+int _uex_irq(void);
 
 int _uex_thread_main(
 		uex_thread_f	main_f,
@@ -25,7 +26,9 @@ int _uex_thread_main(
 
 typedef void *svScope;
 
-static svScope			m_scope = 0;
+static svScope					m_scope = 0;
+static uex_interrupt_handler	m_handler = 0;
+static void						*m_handler_ud = 0;
 
 svScope svGetScope();
 svScope svSetScope(const svScope s);
@@ -111,4 +114,20 @@ void uex_cond_signal(uex_cond_t *c) {
 	_uex_cond_signal(*c);
 }
 
+// Exported DPI task
+int _uex_irq(void) {
+	if (m_handler) {
+		m_handler(m_handler_ud);
+	} else {
+		fprintf(stdout, "FATAL: no handler\n");
+	}
 
+	return 0;
+}
+
+void uex_sv_set_interrupt_handler(
+		uex_interrupt_handler	h,
+		void					*ud) {
+	m_handler = h;
+	m_handler_ud = ud;
+}

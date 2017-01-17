@@ -8,7 +8,7 @@
 
 typedef struct uex_irq_handler_s {
 	uint32_t		*id;
-	uex_irq_f		*handler;
+	uex_irq_f		handler;
 	void			*ud;
 } uex_irq_handler_t;
 
@@ -30,7 +30,7 @@ int32_t uex_get_irq(uint32_t *drv_id) {
 
 void uex_set_irq_handler(
 		uint32_t 		irq,
-		uex_irq_f		*f,
+		uex_irq_f		f,
 		void			*ud) {
 
 	if (irq < UEX_MAX_IRQ) {
@@ -54,7 +54,7 @@ void uex_set_irq_id(
 
 void uex_trigger_irq(uint32_t irq) {
 	if (uex_irq_handlers[irq].handler) {
-		uex_irq_handlers[irq].handler(ueq_irq_handlers[irq].ud);
+		uex_irq_handlers[irq].handler(uex_irq_handlers[irq].ud);
 	} else {
 		uex_kpanic("Triggering unhandled interrupt %d", irq);
 	}

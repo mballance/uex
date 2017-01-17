@@ -6,5 +6,6 @@ package uex_ve_tests_pkg;
 	import uex_ve_env_pkg::*;
 	
 	`include "uex_ve_test_base.svh"
+	`include "uex_ve_irq_test.svh"
 	
 endpackage

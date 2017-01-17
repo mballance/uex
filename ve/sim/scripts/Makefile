@@ -2,9 +2,14 @@
 include $(SIMSCRIPTS_DIR)/mkfiles/plusargs.mk
 
 TB=uex_ve_tb
-DPI_OBJS_LIBS += test_sw.o googletest.o uex_sys_dpi.o
+DPI_OBJS_LIBS += test_sw.o googletest.o uex.o
 GOOGLE_TEST_SRC = \
 	gtest-all.cc
+	
+UEX_SRC := \
+	$(notdir $(wildcard $(SIM_DIR)/../../*.c)) \
+	uex_sys_dpi.c
+		
 	
 TEST_SW_SRC := $(notdir $(wildcard $(SIM_DIR)/../tests/sw/*.cpp))
 
@@ -24,6 +29,9 @@ googletest.o : $(GOOGLE_TEST_SRC:.cc=.o)
 	
 test_sw.o : $(TEST_SW_SRC:.cpp=.o)
 	$(LD) -r -o $@ $^
+	
+uex.o : $(UEX_SRC:.c=.o)
+	$(LD) -r -o $@ $^
 
 %.o : $(SIM_DIR)/../../../googletest/src/%.cc
 	$(CXX) -c $(CXXFLAGS) -o $@ $^
@@ -32,5 +40,8 @@ test_sw.o : $(TEST_SW_SRC:.cpp=.o)
 	$(CXX) -c $(CXXFLAGS) -o $@ $^
 	
 %.o : $(SIM_DIR)/../../impl/sv/%.c
+	$(CC) -c $(CFLAGS) -o $@ $^
+	
+%.o : $(SIM_DIR)/../../%.c
 	$(CC) -c $(CFLAGS) -o $@ $^
 	
