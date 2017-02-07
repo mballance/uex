@@ -1,0 +1,8 @@
+[submodule "ve/googletest_uvm"]
+	path = ve/googletest_uvm
+	url = https://github.com/mballance/googletest_uvm.git
+	branch = master
+[submodule "ve/simscripts"]
+	path = ve/simscripts
+	url = https://github.com/mballance/simscripts.git
+	branch = master
