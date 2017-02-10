@@ -64,6 +64,7 @@ uth_swap:
 	l.andi		r6, r5, 2 // init flag
 	l.sfeqi		r6, 2 // We're already initialized
 	l.bf		.Linit
+	l.nop
 		// Not initialized yet
 		l.lwz		r1, 4(r4) // load next->stack_base
 		l.lwz		r6, 8(r4) // load next->stack_sz
@@ -81,16 +82,18 @@ uth_swap:
 		l.lwz		r3, 4(r1)
 		l.lwz		r4, 8(r1)
 
-	l.j			.Lrestore
+		// Restore the stack pointer from curr
+		l.lwz		r1, 12(r3)
+		l.j			.Lrestore
+		l.nop
 .Linit:	
 	// Already initialized
 	// Save SP to curr->SP
-//	l.sw		1
+	l.sw		12(r3), r1
+	// Load SP from next->SP
+	l.lwz		r1, 12(r4)
 
-	// Assume r3,r4 have been restored 
 .Lrestore:
-	// Restore the stack pointer from curr
-	l.lwz		r1, 12(r3)
 
 	// Restore core registers	
 //	l.lwz		r3, -124(r1)
@@ -124,6 +127,7 @@ uth_swap:
 	l.lwz		r30, -116(r1)
 	l.lwz		r31, -120(r1)
 
+	// Jump back to the caller
 	l.lwz		r2, -8(r1)
 	l.lwz		r9, -4(r1)
 
