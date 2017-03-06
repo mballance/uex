@@ -32,6 +32,8 @@ void uth_yield(void);
 
 uth_thread_t *uth_create(uth_main_f f, void *ud);
 
+uth_thread_t *uth_self(void);
+
 void uth_mutex_init(uth_mutex_t *m);
 
 void uth_mutex_lock(uth_mutex_t *m);

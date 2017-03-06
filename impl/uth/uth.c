@@ -25,6 +25,22 @@ extern void uth_swap(
 	uth_thread_t		*curr,
 	uth_thread_t		*next);
 
+void uth_busywait(void) __attribute__((weak));
+
+void uth_busywait(void) {
+	fprintf(stdout, "Error: uth_busywait called\n");
+}
+
+static void uth_init_main_thread(void) {
+	if (!prv_active_thread) {
+		// We're the main thread, and we must initialize
+		memset(&prv_main_thread, 0, sizeof(uth_thread_t));
+		prv_main_thread.status =
+          (UTH_THREAD_STATUS_ACTIVE | UTH_THREAD_STATUS_INIT);
+		prv_active_thread = &prv_main_thread;
+	}
+}
+
 void uth_thread_trampoline(uth_thread_t *t) {
     t->status |= UTH_THREAD_STATUS_INIT;
 
@@ -46,10 +62,12 @@ void uth_yield(void) {
 
 	if (!prv_active_thread) {
 		// We're the main thread, and we must initialize
-		memset(&prv_main_thread, 0, sizeof(uth_thread_t));
-		prv_main_thread.status =
-          (UTH_THREAD_STATUS_ACTIVE | UTH_THREAD_STATUS_INIT);
-		prv_active_thread = &prv_main_thread;
+		uth_init_main_thread();
+	}
+
+	// Spin until a thread can be awakened
+	while (!prv_active_list) {
+		uth_busywait();
 	}
 
 	if ((next=prv_active_list)) {
@@ -86,6 +104,7 @@ void uth_yield(void) {
 		prv_active_thread = active;
 	} else {
 		// Just return
+		fprintf(stdout, "Note: no unblocked thread to yield to\n");
 	}
 }
 
@@ -131,8 +150,17 @@ uth_thread_t *uth_create(uth_main_f f, void *ud) {
   prv_active_list = t;
 }
 
+uth_thread_t *uth_self(void) {
+	if (!prv_active_thread) {
+		uth_init_main_thread();
+	}
+	return prv_active_thread;
+}
+
+
 // Blocks the active thread
-static void uth_thread_block() {
+static void uth_thread_block(void) {
+	fprintf(stdout, "Block thread %p\n", prv_active_thread);
 	prv_active_thread->status |= UTH_THREAD_STATUS_BLOCKED;
 
 	uth_yield();
@@ -144,6 +172,7 @@ static void uth_thread_block() {
 
 static void uth_thread_unblock(uth_thread_t *t) {
 	t->status &= ~(UTH_THREAD_STATUS_BLOCKED);
+	fprintf(stdout, "Unblock thread %p\n", t);
 
 	// Add this thread back to the active list
 	t->next = prv_active_list;
@@ -158,6 +187,10 @@ void uth_mutex_init(uth_mutex_t *m) {
 }
 
 void uth_mutex_lock(uth_mutex_t *m) {
+	if (!prv_active_thread) {
+		uth_init_main_thread();
+	}
+
 	if (!m->owner) {
 		// Just make the active thread the owner
 		m->owner = prv_active_thread;
@@ -187,6 +220,12 @@ void uth_cond_init(uth_cond_t *c) {
 }
 
 void uth_cond_wait(uth_cond_t *c, uth_mutex_t *t) {
+	if (!prv_active_thread) {
+		uth_init_main_thread();
+	}
+
+	fprintf(stdout, "uth_cond_wait: active=%p\n", prv_active_thread);
+
 	prv_active_thread->next = c->waiters;
 	c->waiters = prv_active_thread;
 
@@ -196,15 +235,25 @@ void uth_cond_wait(uth_cond_t *c, uth_mutex_t *t) {
 }
 
 void uth_cond_signal(uth_cond_t *c) {
+	if (!prv_active_thread) {
+		uth_init_main_thread();
+	}
+
 	if (c->waiters) {
 		uth_thread_t *t = c->waiters;
 		c->waiters = c->waiters->next;
 
 		uth_thread_unblock(t);
+	} else {
+		fprintf(stdout, "Note: no waiters to signal\n");
 	}
 }
 
 void uth_cond_signalall(uth_cond_t *c) {
+	if (!prv_active_thread) {
+		uth_init_main_thread();
+	}
+
 	while (c->waiters) {
 		uth_thread_t *t = c->waiters;
 		c->waiters = c->waiters->next;

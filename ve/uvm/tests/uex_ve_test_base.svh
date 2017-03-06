@@ -1,8 +1,5 @@
 
-import "DPI-C" context task uex_test_main(
-	string 			testname,
-	output int		status);
-	
+
 class uex_ve_test_base extends uvm_test;
 	
 	`uvm_component_utils(uex_ve_test_base)

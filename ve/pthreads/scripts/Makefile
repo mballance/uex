@@ -5,7 +5,6 @@ TB=uex_ve_tb
 DPI_OBJS_LIBS += test_sw.o uex.o
 	
 MK_INCLUDES += $(GOOGLETEST_UVM)/src/rules_defs.mk
-#MK_INCLUDES += $(UEX)/rules_defs.mk
 	
 UEX_SRC := \
 	$(notdir $(wildcard $(SIM_DIR)/../../*.c)) \

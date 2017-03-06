@@ -1,0 +1,65 @@
+Note: loading defaults from .simscripts
+run_root=/scratch1/ballance/rundir/ve
+cmd=
+Test: tests/uex_basic_cond_test.f
+/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/rules_defs.mk:16: warning: overriding commands for target `print'
+/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src/rules_defs.mk:28: warning: ignoring old commands for target `print'
+make: Entering directory `/export/scratch/ballance/rundir/ve/none'
+build-pre-compile: 
+echo "This is print"
+This is print
+build-compile: libuex.o googletest.o libuex_uth.o libuth.o libuth_or1k.o libuex_tests.o print print
+build-post-compile: 
+build-link: 
+run build-postlink: 
+MK_INCLUDES=/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src/rules_defs.mk /home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/rules_defs.mk /home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/impl/uth/rules_defs.mk /home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/impl/uth/or1k/rules_defs.mk /project/inFact/ballance/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/or1ksim_uth/../tests/rules_defs.mk 
+SIMSCRIPTS_TOOLS: 
+SIMSCRIPTS_PLUSARGS_TOOLS: 
+PLUSARGS: +SW_TESTNAME=UEX.basic_cond_test +UVM_TESTNAME=uex_ve_test_base
+INFACT_IMPORT_TARGETS: 
+build-pre-compile: 
+build-compile: libuex.o googletest.o libuex_uth.o libuth.o libuth_or1k.o libuex_tests.o print print
+build-post-compile: 
+build-pre-link: 
+build-link:  
+build-post-link: 
+make: Leaving directory `/export/scratch/ballance/rundir/ve/none'
+/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/rules_defs.mk:16: warning: overriding commands for target `print'
+/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src/rules_defs.mk:28: warning: ignoring old commands for target `print'
+make: Entering directory `/export/scratch/ballance/rundir/ve/none'
+== Simulator: none == 
+== Enabled Tools ==
+make: Leaving directory `/export/scratch/ballance/rundir/ve/none'
+/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/rules_defs.mk:16: warning: overriding commands for target `print'
+/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src/rules_defs.mk:28: warning: ignoring old commands for target `print'
+or1k-elf-g++ -c -D_POSIX_PATH_MAX=256 -DGTEST_HAS_POSIX_RE=0 -fPIC -g -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src/ -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src//../googletest/googletest/include -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src//../googletest/googletest  -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src/  -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src//../googletest/googletest/src  -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/  -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/impl/uth/  -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/impl/uth/or1k/  -I/project/inFact/ballance/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/or1ksim_uth/../tests/ -o testmain.o /project/inFact/ballance/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/or1ksim_uth/src/testmain.cpp \
+		-DTESTNAME_STR=\"uex_basic_cond_test\" -DSW_TESTNAME_STR=\"UEX.basic_cond_test\"
+or1k-elf-g++ -o testmain.elf testmain.o -mboard=or1ksim \
+		/scratch1/ballance/rundir/ve/none/libuex.o /scratch1/ballance/rundir/ve/none/googletest.o /scratch1/ballance/rundir/ve/none/libuex_uth.o /scratch1/ballance/rundir/ve/none/libuth.o /scratch1/ballance/rundir/ve/none/libuth_or1k.o /scratch1/ballance/rundir/ve/none/libuex_tests.o
+/project/s4c/ballance/tools/compilers/gcc-or1k-elf-4.9.2-linux_x86_64/bin/../lib/gcc/or1k-elf/4.9.2/../../../../or1k-elf/lib/libor1k.a(syscalls.o):(.data+0x0): multiple definition of `environ'
+/project/s4c/ballance/tools/compilers/gcc-or1k-elf-4.9.2-linux_x86_64/bin/../lib/gcc/or1k-elf/4.9.2/../../../../or1k-elf/lib/libc.a(lib_a-environ.o):(.data+0x0): first defined here
+/scratch1/ballance/rundir/ve/none/googletest.o: In function `testing::internal::FilePath::GetCurrentDir()':
+/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src//../googletest/googletest/src/gtest-filepath.cc:109: undefined reference to `getcwd'
+/scratch1/ballance/rundir/ve/none/googletest.o: In function `testing::internal::FilePath::CreateFolder() const':
+/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src//../googletest/googletest/src/gtest-filepath.cc:334: undefined reference to `mkdir'
+/scratch1/ballance/rundir/ve/none/googletest.o: In function `testing::internal::CapturedStream::CapturedStream(int)':
+/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src//../googletest/googletest/src/gtest-port.cc:936: undefined reference to `dup'
+/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src//../googletest/googletest/src/gtest-port.cc:980: undefined reference to `dup2'
+/scratch1/ballance/rundir/ve/none/googletest.o: In function `testing::internal::CapturedStream::GetCapturedString()':
+/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src//../googletest/googletest/src/gtest-port.cc:992: undefined reference to `dup2'
+/project/s4c/ballance/tools/compilers/gcc-or1k-elf-4.9.2-linux_x86_64/bin/../lib/gcc/or1k-elf/4.9.2/../../../../or1k-elf/lib/libc.a(lib_a-fopen.o): In function `_fopen_r':
+/scratch1/ballance/cross-compile/cross-tools-scripts/build/gcc-or1k-elf/newlib-2.2.0.20150225/or1k-elf/newlib/libc/stdio/../../../.././newlib/libc/stdio/fopen.c:141: undefined reference to `_open_r'
+/project/s4c/ballance/tools/compilers/gcc-or1k-elf-4.9.2-linux_x86_64/bin/../lib/gcc/or1k-elf/4.9.2/../../../../or1k-elf/lib/libc.a(lib_a-mktemp.o): In function `_gettemp':
+/scratch1/ballance/cross-compile/cross-tools-scripts/build/gcc-or1k-elf/newlib-2.2.0.20150225/or1k-elf/newlib/libc/stdio/../../../.././newlib/libc/stdio/mktemp.c:227: undefined reference to `_open_r'
+/project/s4c/ballance/tools/compilers/gcc-or1k-elf-4.9.2-linux_x86_64/bin/../lib/gcc/or1k-elf/4.9.2/../../../../or1k-elf/lib/libc.a(lib_a-sysgettod.o): In function `gettimeofday':
+/scratch1/ballance/cross-compile/cross-tools-scripts/build/gcc-or1k-elf/newlib-2.2.0.20150225/or1k-elf/newlib/libc/syscalls/../../../.././newlib/libc/syscalls/sysgettod.c:12: undefined reference to `_gettimeofday_r'
+/project/s4c/ballance/tools/compilers/gcc-or1k-elf-4.9.2-linux_x86_64/bin/../lib/gcc/or1k-elf/4.9.2/../../../../or1k-elf/lib/libc.a(lib_a-sysopen.o): In function `open':
+/scratch1/ballance/cross-compile/cross-tools-scripts/build/gcc-or1k-elf/newlib-2.2.0.20150225/or1k-elf/newlib/libc/syscalls/../../../.././newlib/libc/syscalls/sysopen.c:21: undefined reference to `_open_r'
+collect2: error: ld returned 1 exit status
+make: *** [runtest] Error 1
+FAIL: uex_basic_cond_test - no log file
+/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/rules_defs.mk:16: warning: overriding commands for target `print'
+/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src/rules_defs.mk:28: warning: ignoring old commands for target `print'
+make: Entering directory `/export/scratch/ballance/rundir/ve/none'
+make: Nothing to be done for `post-run'.
+make: Leaving directory `/export/scratch/ballance/rundir/ve/none'
