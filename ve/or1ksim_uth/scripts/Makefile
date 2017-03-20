@@ -30,6 +30,7 @@ RUN_TARGETS += runtest
 
 CXXFLAGS +=  -D_POSIX_PATH_MAX=256
 CXXFLAGS += -DGTEST_HAS_POSIX_RE=0
+CXXFLAGS += -DGTEST_HAS_STREAM_REDIRECTION=0
 
 SW_TESTNAME := $(call get_plusarg,SW_TESTNAME,$(PLUSARGS))
 
@@ -38,8 +39,12 @@ include $(SIMSCRIPTS_DIR)/mkfiles/common_sim.mk
 runtest :
 	$(CXX) -c $(CXXFLAGS) -o testmain.o $(SIM_DIR)/src/testmain.cpp \
 		-DTESTNAME_STR=\"$(TESTNAME)\" -DSW_TESTNAME_STR=\"$(SW_TESTNAME)\"
-	$(CXX) -o testmain.elf testmain.o -mboard=or1ksim \
+	$(CC) -c $(CFLAGS) -o sysstubs.o $(SIM_DIR)/src/sysstubs.c 
+	$(CXX) -o testmain.elf testmain.o sysstubs.o -mboard=or1ksim \
 		$(foreach lib,$(TEST_LIBS),$(BUILD_DIR)/$(lib))
-	or1k-sim -f $(SIM_DIR)/sim.cfg testmain.elf 2>&1 | tee simx.log
+	echo "break exit" > run.do
+	echo "run 1000000000 hush" >> run.do
+	echo "q" >> run.do
+	or1k-sim -f $(SIM_DIR)/sim.cfg testmain.elf -i < run.do 2>&1 | tee simx.log
 
 	
