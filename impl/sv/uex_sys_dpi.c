@@ -8,7 +8,11 @@
 #include <string.h>
 #include <memory.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif __cplusplus
 void _uex_create_thread(uex_thread_f, void *);
+void _uex_thread_join(uint32_t tid);
 uint32_t _uex_mutex_init(void);
 void _uex_mutex_lock(uint32_t mid);
 void _uex_mutex_unlock(uint32_t mid);
@@ -23,6 +27,10 @@ int _uex_irq(void);
 int _uex_thread_main(
 		uex_thread_f	main_f,
 		void 			*ud);
+
+#ifdef __cplusplus
+}
+#endif
 
 typedef void *svScope;
 
@@ -67,7 +75,7 @@ int _uex_thread_main(
 }
 
 int uex_thread_join(uex_thread_t t) {
-
+	_uex_thread_join(t);
 }
 
 void uex_yield(void) {
@@ -131,3 +139,4 @@ void uex_sv_set_interrupt_handler(
 	m_handler = h;
 	m_handler_ud = ud;
 }
+

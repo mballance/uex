@@ -5,11 +5,25 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/time.h>
+#include "test.h"
 
 
 const char *TESTNAME = TESTNAME_STR;
 const char *SW_TESTNAME = SW_TESTNAME_STR;
 
+static uth_busywait_f  busywait_f = 0;
+
+void set_busywait(uth_busywait_f f) {
+  busywait_f = f;
+}
+
+void uth_busywait(void) {
+  if (!busywait_f) {
+    fprintf(stdout, "Error: busywait function not specified\n");
+  } else {
+    busywait_f();
+  }
+}
 
 int main(int argc, char **argv) {
   int status;

@@ -3,6 +3,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/time.h>
+#include <string.h>
 
 extern void _or1k_outbyte(char c);
 

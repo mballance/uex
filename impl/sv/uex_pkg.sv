@@ -24,6 +24,7 @@ package uex_pkg;
 		int unsigned		m_tid;
 		chandle				m_main_f;
 		chandle				m_ud;
+		semaphore			m_join = new(0);
 		
 		function new(
 			int unsigned 	tid,
@@ -38,8 +39,15 @@ package uex_pkg;
 			m_active = m_tid; // preload so yield sets active correctly
 			_uex_yield();
 			_uex_thread_main(m_main_f, m_ud);
+			m_join.put(1);
 			// Delete ourselves
 			m_thread_l[m_tid-1] = null;
+		endtask
+		
+		task do_join();
+			int unsigned sleeping_thread = m_active;
+			m_join.get(1);
+			m_active = sleeping_thread;
 		endtask
 	endclass
 	
@@ -93,11 +101,14 @@ package uex_pkg;
 		chandle				ud);
 		uex_thread t;
 		int tid_i = -1;
-		
-		for (int i=0; i<m_thread_l.size(); i++) begin
-			if (m_thread_l[i] == null) begin
-				tid_i = i;
-				break;
+
+		// Support a maximum 16k threads before looping around
+		if (m_thread_l.size() >= 16384) begin
+			for (int i=0; i<m_thread_l.size(); i++) begin
+				if (m_thread_l[i] == null) begin
+					tid_i = i;
+					break;
+				end
 			end
 		end
 		
@@ -124,6 +135,14 @@ package uex_pkg;
 			t.run();
 		join_none
 	endtask
+	
+	task automatic _uex_thread_join(int unsigned tid);
+		uex_thread t = m_thread_l[tid];
+		if (t != null) begin
+			t.do_join();
+		end
+	endtask
+	export "DPI-C" task _uex_thread_join;
 	
 	task automatic _uex_yield();
 		int unsigned sleeping_thread = m_active;
