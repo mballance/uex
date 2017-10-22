@@ -2,7 +2,7 @@
  * uth.c
  ****************************************************************************/
 #include "uth.h"
-#include <stdio.h>
+// #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
@@ -28,7 +28,7 @@ extern void uth_swap(
 void uth_busywait(void) __attribute__((weak));
 
 void uth_busywait(void) {
-	fprintf(stdout, "Error: uth_busywait called\n");
+//	fprintf(stdout, "Error: uth_busywait called\n");
 }
 
 static void uth_init_main_thread(void) {
@@ -44,12 +44,6 @@ static void uth_init_main_thread(void) {
 void uth_thread_trampoline(uth_thread_t *t) {
     t->status |= UTH_THREAD_STATUS_INIT;
 
-    fprintf(stdout, "uth_thread_trampoline\n");
-    fflush(stdout);
-    fprintf(stdout, "  t=%p\n", t);
-    fflush(stdout);
-    fprintf(stdout, "  main_f=%p\n", t->main_f);
-    fflush(stdout);
 	t->main_f(t->ud);
 
 	// The thread ended
@@ -80,10 +74,6 @@ void uth_yield(void) {
 		// Set the next thread as the active one
 		prv_active_thread = next;
 
-		fprintf(stdout, "active=%p\n", active);
-		fprintf(stdout, "next=%p\n", next);
-		fflush(stdout);
-
 		// Add the active thread to the end of the list,
 		// provided it isn't blocked
 		if (!(active->status & UTH_THREAD_STATUS_BLOCKED)) {
@@ -104,7 +94,7 @@ void uth_yield(void) {
 		prv_active_thread = active;
 	} else {
 		// Just return
-		fprintf(stdout, "Note: no unblocked thread to yield to\n");
+//		fprintf(stdout, "Note: no unblocked thread to yield to\n");
 	}
 }
 
@@ -127,10 +117,11 @@ uth_thread_t *uth_create(uth_main_f f, void *ud) {
     if (!t) {
       // Move to the next block
       if (!b->next) {
-        uth_thread_block_t *nb = (uth_thread_block_t *)malloc(
-            sizeof(uth_thread_block_t));
-        memset(nb, 0, sizeof(uth_thread_block_t));
-        b->next = nb;
+    	  // TODO:
+//        uth_thread_block_t *nb = (uth_thread_block_t *)malloc(
+//            sizeof(uth_thread_block_t));
+//        memset(nb, 0, sizeof(uth_thread_block_t));
+//        b->next = nb;
       }
 
       b = b->next;
@@ -160,19 +151,19 @@ uth_thread_t *uth_self(void) {
 
 // Blocks the active thread
 static void uth_thread_block(void) {
-	fprintf(stdout, "Block thread %p\n", prv_active_thread);
+//	fprintf(stdout, "Block thread %p\n", prv_active_thread);
 	prv_active_thread->status |= UTH_THREAD_STATUS_BLOCKED;
 
 	uth_yield();
 
-	if ((prv_active_thread->status & UTH_THREAD_STATUS_BLOCKED)) {
-		fprintf(stdout, "Error: blocked thread returned\n");
-	}
+//	if ((prv_active_thread->status & UTH_THREAD_STATUS_BLOCKED)) {
+//		fprintf(stdout, "Error: blocked thread returned\n");
+//	}
 }
 
 static void uth_thread_unblock(uth_thread_t *t) {
 	t->status &= ~(UTH_THREAD_STATUS_BLOCKED);
-	fprintf(stdout, "Unblock thread %p\n", t);
+//	fprintf(stdout, "Unblock thread %p\n", t);
 
 	// Add this thread back to the active list
 	t->next = prv_active_list;
@@ -224,7 +215,7 @@ void uth_cond_wait(uth_cond_t *c, uth_mutex_t *t) {
 		uth_init_main_thread();
 	}
 
-	fprintf(stdout, "uth_cond_wait: active=%p\n", prv_active_thread);
+//	fprintf(stdout, "uth_cond_wait: active=%p\n", prv_active_thread);
 
 	prv_active_thread->next = c->waiters;
 	c->waiters = prv_active_thread;
@@ -245,7 +236,7 @@ void uth_cond_signal(uth_cond_t *c) {
 
 		uth_thread_unblock(t);
 	} else {
-		fprintf(stdout, "Note: no waiters to signal\n");
+//		fprintf(stdout, "Note: no waiters to signal\n");
 	}
 }
 

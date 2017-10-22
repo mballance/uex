@@ -17,7 +17,7 @@ typedef uint32_t uex_cond_t;
 extern "C" {
 #endif
 
-typedef void (*uex_interrupt_handler)(void *ud);
+typedef void (*uex_interrupt_handler)(void *ud, uint32_t id);
 
 void uex_sv_set_interrupt_handler(
 		uex_interrupt_handler	h,

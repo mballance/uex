@@ -32,32 +32,601 @@ make: Entering directory `/export/scratch/ballance/rundir/ve/none'
 make: Leaving directory `/export/scratch/ballance/rundir/ve/none'
 /home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/rules_defs.mk:16: warning: overriding commands for target `print'
 /home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src/rules_defs.mk:28: warning: ignoring old commands for target `print'
-or1k-elf-g++ -c -D_POSIX_PATH_MAX=256 -DGTEST_HAS_POSIX_RE=0 -fPIC -g -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src/ -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src//../googletest/googletest/include -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src//../googletest/googletest  -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src/  -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src//../googletest/googletest/src  -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/  -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/impl/uth/  -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/impl/uth/or1k/  -I/project/inFact/ballance/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/or1ksim_uth/../tests/ -o testmain.o /project/inFact/ballance/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/or1ksim_uth/src/testmain.cpp \
+or1k-elf-g++ -c -D_POSIX_PATH_MAX=256 -DGTEST_HAS_POSIX_RE=0 -DGTEST_HAS_STREAM_REDIRECTION=0 -fPIC -g -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src/ -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src//../googletest/googletest/include -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src//../googletest/googletest  -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src/  -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src//../googletest/googletest/src  -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/  -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/impl/uth/  -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/impl/uth/or1k/  -I/project/inFact/ballance/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/or1ksim_uth/../tests/ -o testmain.o /project/inFact/ballance/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/or1ksim_uth/src/testmain.cpp \
 		-DTESTNAME_STR=\"uex_basic_cond_test\" -DSW_TESTNAME_STR=\"UEX.basic_cond_test\"
-or1k-elf-g++ -o testmain.elf testmain.o -mboard=or1ksim \
+or1k-elf-gcc -c -fPIC  -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src/  -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src//../googletest/googletest/src  -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/  -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/impl/uth/  -I/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/impl/uth/or1k/  -I/project/inFact/ballance/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/or1ksim_uth/../tests/ -o sysstubs.o /project/inFact/ballance/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/or1ksim_uth/src/sysstubs.c 
+/project/inFact/ballance/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/or1ksim_uth/src/sysstubs.c: In function ‘getcwd’:
+/project/inFact/ballance/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/or1ksim_uth/src/sysstubs.c:145:3: warning: incompatible implicit declaration of built-in function ‘strcpy’
+   strcpy(buf, "cwd");
+   ^
+/project/inFact/ballance/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/or1ksim_uth/src/sysstubs.c: In function ‘_gettimeofday_r’:
+/project/inFact/ballance/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/or1ksim_uth/src/sysstubs.c:156:3: warning: incompatible implicit declaration of built-in function ‘memset’
+   memset(tp, 0, sizeof(struct timeval));
+   ^
+or1k-elf-g++ -o testmain.elf testmain.o sysstubs.o -mboard=or1ksim \
 		/scratch1/ballance/rundir/ve/none/libuex.o /scratch1/ballance/rundir/ve/none/googletest.o /scratch1/ballance/rundir/ve/none/libuex_uth.o /scratch1/ballance/rundir/ve/none/libuth.o /scratch1/ballance/rundir/ve/none/libuth_or1k.o /scratch1/ballance/rundir/ve/none/libuex_tests.o
-/project/s4c/ballance/tools/compilers/gcc-or1k-elf-4.9.2-linux_x86_64/bin/../lib/gcc/or1k-elf/4.9.2/../../../../or1k-elf/lib/libor1k.a(syscalls.o):(.data+0x0): multiple definition of `environ'
-/project/s4c/ballance/tools/compilers/gcc-or1k-elf-4.9.2-linux_x86_64/bin/../lib/gcc/or1k-elf/4.9.2/../../../../or1k-elf/lib/libc.a(lib_a-environ.o):(.data+0x0): first defined here
-/scratch1/ballance/rundir/ve/none/googletest.o: In function `testing::internal::FilePath::GetCurrentDir()':
-/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src//../googletest/googletest/src/gtest-filepath.cc:109: undefined reference to `getcwd'
-/scratch1/ballance/rundir/ve/none/googletest.o: In function `testing::internal::FilePath::CreateFolder() const':
-/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src//../googletest/googletest/src/gtest-filepath.cc:334: undefined reference to `mkdir'
-/scratch1/ballance/rundir/ve/none/googletest.o: In function `testing::internal::CapturedStream::CapturedStream(int)':
-/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src//../googletest/googletest/src/gtest-port.cc:936: undefined reference to `dup'
-/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src//../googletest/googletest/src/gtest-port.cc:980: undefined reference to `dup2'
-/scratch1/ballance/rundir/ve/none/googletest.o: In function `testing::internal::CapturedStream::GetCapturedString()':
-/home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src//../googletest/googletest/src/gtest-port.cc:992: undefined reference to `dup2'
-/project/s4c/ballance/tools/compilers/gcc-or1k-elf-4.9.2-linux_x86_64/bin/../lib/gcc/or1k-elf/4.9.2/../../../../or1k-elf/lib/libc.a(lib_a-fopen.o): In function `_fopen_r':
-/scratch1/ballance/cross-compile/cross-tools-scripts/build/gcc-or1k-elf/newlib-2.2.0.20150225/or1k-elf/newlib/libc/stdio/../../../.././newlib/libc/stdio/fopen.c:141: undefined reference to `_open_r'
-/project/s4c/ballance/tools/compilers/gcc-or1k-elf-4.9.2-linux_x86_64/bin/../lib/gcc/or1k-elf/4.9.2/../../../../or1k-elf/lib/libc.a(lib_a-mktemp.o): In function `_gettemp':
-/scratch1/ballance/cross-compile/cross-tools-scripts/build/gcc-or1k-elf/newlib-2.2.0.20150225/or1k-elf/newlib/libc/stdio/../../../.././newlib/libc/stdio/mktemp.c:227: undefined reference to `_open_r'
-/project/s4c/ballance/tools/compilers/gcc-or1k-elf-4.9.2-linux_x86_64/bin/../lib/gcc/or1k-elf/4.9.2/../../../../or1k-elf/lib/libc.a(lib_a-sysgettod.o): In function `gettimeofday':
-/scratch1/ballance/cross-compile/cross-tools-scripts/build/gcc-or1k-elf/newlib-2.2.0.20150225/or1k-elf/newlib/libc/syscalls/../../../.././newlib/libc/syscalls/sysgettod.c:12: undefined reference to `_gettimeofday_r'
-/project/s4c/ballance/tools/compilers/gcc-or1k-elf-4.9.2-linux_x86_64/bin/../lib/gcc/or1k-elf/4.9.2/../../../../or1k-elf/lib/libc.a(lib_a-sysopen.o): In function `open':
-/scratch1/ballance/cross-compile/cross-tools-scripts/build/gcc-or1k-elf/newlib-2.2.0.20150225/or1k-elf/newlib/libc/syscalls/../../../.././newlib/libc/syscalls/sysopen.c:21: undefined reference to `_open_r'
-collect2: error: ld returned 1 exit status
-make: *** [runtest] Error 1
-FAIL: uex_basic_cond_test - no log file
+echo "break exit" > run.do
+echo "run 1000000000 hush" >> run.do
+echo "q" >> run.do
+or1k-sim -f /project/inFact/ballance/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/or1ksim_uth/sim.cfg testmain.elf -i < run.do 2>&1 | tee simx.log
+Warning: Unknown Ethernet type: file assumed.
+Warning: .//project/inFact/ballance/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/or1ksim_uth/sim.cfg: Unrecognized parameter: section at line 467; ignored.
+Warning: PS2 keyboard unable to open RX file stream.
+Seeding random generator with value 0x2dc84bbf
+Or1ksim 2012-04-27
+Building automata... done, num uncovered: 0/215.
+Parsing operands data... done.
+Resetting PIC.
+loadcode: filename testmain.elf  startaddr=00000000  virtphy_transl=00000000
+Not COFF file format
+ELF type: 0x0002
+ELF machine: 0x005c
+ELF version: 0x00000001
+ELF sec = 27
+Section: .vectors, vaddr: 0x00000000, paddr: 0x0 offset: 0x00002000, size: 0x00002000
+Section: .init, vaddr: 0x00002000, paddr: 0x2000 offset: 0x00004000, size: 0x00000028
+Section: .text, vaddr: 0x00002028, paddr: 0x2028 offset: 0x00004028, size: 0x000f15a4
+Section: .fini, vaddr: 0x000f35cc, paddr: 0xf35cc offset: 0x000f55cc, size: 0x0000001c
+Section: .rodata, vaddr: 0x000f35e8, paddr: 0xf35e8 offset: 0x000f55e8, size: 0x0000ba00
+Section: .eh_frame, vaddr: 0x00100fe8, paddr: 0x100fe8 offset: 0x00100fe8, size: 0x0001e2f8
+Section: .gcc_except_table, vaddr: 0x0011f2e0, paddr: 0x11f2e0 offset: 0x0011f2e0, size: 0x00006824
+Section: .ctors, vaddr: 0x00125b04, paddr: 0x125b04 offset: 0x00125b04, size: 0x00000030
+Section: .dtors, vaddr: 0x00125b34, paddr: 0x125b34 offset: 0x00125b34, size: 0x00000008
+Section: .jcr, vaddr: 0x00125b3c, paddr: 0x125b3c offset: 0x00125b3c, size: 0x00000004
+Section: .data.rel.ro, vaddr: 0x00125b40, paddr: 0x125b40 offset: 0x00125b40, size: 0x000004f0
+Section: .data, vaddr: 0x00126030, paddr: 0x126030 offset: 0x00126030, size: 0x00000de0
+Section: .got, vaddr: 0x00126e10, paddr: 0x126e10 offset: 0x00126e10, size: 0x0000017c
+[?1034h(sim) break exit
+
+Breakpoint at 0x000d2f40 set.
+(sim) run 1000000000 hush
+--> RUN_ALL_TESTS
+Note: Google Test filter = UEX.basic_cond_test
+[==========] Running 1 test from 1 test case.
+[----------] Global test environment set-up.
+[----------] 1 test from UEX
+[ RUN      ] UEX.basic_cond_test
+Hello there
+main: 1208748
+active=0x1271ac
+next=0x1271ec
+uth_thread_trampoline
+  t=0x1271ec
+  main_f=0x4efb4
+--> Waiting for data
+ --> not ready; blocking
+uth_cond_wait: active=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271d0
+uth_thread_trampoline
+  t=0x1271d0
+  main_f=0x4ed00
+--> Producing Data
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+ <-- not ready; blocking
+ -- m_data_ready=1
+<-- Waiting for data
+--> Signaling Consumption
+Note: no waiters to signal
+<-- Signaling Consumption
+--> Waiting for data
+ --> not ready; blocking
+uth_cond_wait: active=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+<-- Producing Data
+--> Waiting for consumption
+ -- already taken
+ -- m_data_taken=1
+<-- Waiting for consumption
+--> Producing Data
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+ <-- not ready; blocking
+ -- m_data_ready=1
+<-- Waiting for data
+--> Signaling Consumption
+Note: no waiters to signal
+<-- Signaling Consumption
+--> Waiting for data
+ --> not ready; blocking
+uth_cond_wait: active=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+<-- Producing Data
+--> Waiting for consumption
+ -- already taken
+ -- m_data_taken=1
+<-- Waiting for consumption
+--> Producing Data
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+ <-- not ready; blocking
+ -- m_data_ready=1
+<-- Waiting for data
+--> Signaling Consumption
+Note: no waiters to signal
+<-- Signaling Consumption
+--> Waiting for data
+ --> not ready; blocking
+uth_cond_wait: active=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+<-- Producing Data
+--> Waiting for consumption
+ -- already taken
+ -- m_data_taken=1
+<-- Waiting for consumption
+--> Producing Data
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+ <-- not ready; blocking
+ -- m_data_ready=1
+<-- Waiting for data
+--> Signaling Consumption
+Note: no waiters to signal
+<-- Signaling Consumption
+--> Waiting for data
+ --> not ready; blocking
+uth_cond_wait: active=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+<-- Producing Data
+--> Waiting for consumption
+ -- already taken
+ -- m_data_taken=1
+<-- Waiting for consumption
+--> Producing Data
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+ <-- not ready; blocking
+ -- m_data_ready=1
+<-- Waiting for data
+--> Signaling Consumption
+Note: no waiters to signal
+<-- Signaling Consumption
+--> Waiting for data
+ --> not ready; blocking
+uth_cond_wait: active=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+<-- Producing Data
+--> Waiting for consumption
+ -- already taken
+ -- m_data_taken=1
+<-- Waiting for consumption
+--> Producing Data
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+ <-- not ready; blocking
+ -- m_data_ready=1
+<-- Waiting for data
+--> Signaling Consumption
+Note: no waiters to signal
+<-- Signaling Consumption
+--> Waiting for data
+ --> not ready; blocking
+uth_cond_wait: active=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+<-- Producing Data
+--> Waiting for consumption
+ -- already taken
+ -- m_data_taken=1
+<-- Waiting for consumption
+--> Producing Data
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+ <-- not ready; blocking
+ -- m_data_ready=1
+<-- Waiting for data
+--> Signaling Consumption
+Note: no waiters to signal
+<-- Signaling Consumption
+--> Waiting for data
+ --> not ready; blocking
+uth_cond_wait: active=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+<-- Producing Data
+--> Waiting for consumption
+ -- already taken
+ -- m_data_taken=1
+<-- Waiting for consumption
+--> Producing Data
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+ <-- not ready; blocking
+ -- m_data_ready=1
+<-- Waiting for data
+--> Signaling Consumption
+Note: no waiters to signal
+<-- Signaling Consumption
+--> Waiting for data
+ --> not ready; blocking
+uth_cond_wait: active=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+<-- Producing Data
+--> Waiting for consumption
+ -- already taken
+ -- m_data_taken=1
+<-- Waiting for consumption
+--> Producing Data
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+ <-- not ready; blocking
+ -- m_data_ready=1
+<-- Waiting for data
+--> Signaling Consumption
+Note: no waiters to signal
+<-- Signaling Consumption
+--> Waiting for data
+ --> not ready; blocking
+uth_cond_wait: active=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+<-- Producing Data
+--> Waiting for consumption
+ -- already taken
+ -- m_data_taken=1
+<-- Waiting for consumption
+--> Producing Data
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+ <-- not ready; blocking
+ -- m_data_ready=1
+<-- Waiting for data
+--> Signaling Consumption
+Note: no waiters to signal
+<-- Signaling Consumption
+--> Waiting for data
+ --> not ready; blocking
+uth_cond_wait: active=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+<-- Producing Data
+--> Waiting for consumption
+ -- already taken
+ -- m_data_taken=1
+<-- Waiting for consumption
+--> Producing Data
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+ <-- not ready; blocking
+ -- m_data_ready=1
+<-- Waiting for data
+--> Signaling Consumption
+Note: no waiters to signal
+<-- Signaling Consumption
+--> Waiting for data
+ --> not ready; blocking
+uth_cond_wait: active=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+<-- Producing Data
+--> Waiting for consumption
+ -- already taken
+ -- m_data_taken=1
+<-- Waiting for consumption
+--> Producing Data
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+ <-- not ready; blocking
+ -- m_data_ready=1
+<-- Waiting for data
+--> Signaling Consumption
+Note: no waiters to signal
+<-- Signaling Consumption
+--> Waiting for data
+ --> not ready; blocking
+uth_cond_wait: active=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+<-- Producing Data
+--> Waiting for consumption
+ -- already taken
+ -- m_data_taken=1
+<-- Waiting for consumption
+--> Producing Data
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+ <-- not ready; blocking
+ -- m_data_ready=1
+<-- Waiting for data
+--> Signaling Consumption
+Note: no waiters to signal
+<-- Signaling Consumption
+--> Waiting for data
+ --> not ready; blocking
+uth_cond_wait: active=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+<-- Producing Data
+--> Waiting for consumption
+ -- already taken
+ -- m_data_taken=1
+<-- Waiting for consumption
+--> Producing Data
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+ <-- not ready; blocking
+ -- m_data_ready=1
+<-- Waiting for data
+--> Signaling Consumption
+Note: no waiters to signal
+<-- Signaling Consumption
+--> Waiting for data
+ --> not ready; blocking
+uth_cond_wait: active=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+<-- Producing Data
+--> Waiting for consumption
+ -- already taken
+ -- m_data_taken=1
+<-- Waiting for consumption
+--> Producing Data
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+ <-- not ready; blocking
+ -- m_data_ready=1
+<-- Waiting for data
+--> Signaling Consumption
+Note: no waiters to signal
+<-- Signaling Consumption
+--> Waiting for data
+ --> not ready; blocking
+uth_cond_wait: active=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+<-- Producing Data
+--> Waiting for consumption
+ -- already taken
+ -- m_data_taken=1
+<-- Waiting for consumption
+--> Producing Data
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+Block thread 0x1271ec
+active=0x1271ec
+next=0x1271ac
+main: 1208748
+active=0x1271ac
+next=0x1271d0
+Unblock thread 0x1271ec
+active=0x1271d0
+next=0x1271ec
+ <-- not ready; blocking
+ -- m_data_ready=1
+<-- Waiting for data
+--> Signaling Consumption
+Note: no waiters to signal
+<-- Signaling Consumption
+[       OK ] UEX.basic_cond_test (0 ms)
+[----------] 1 test from UEX (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test case ran. (0 ms total)
+[  PASSED  ] 1 test.
+<-- RUN_ALL_TESTS
+Breakpoint hit.
+(sim) q
+
+PASS: uex_basic_cond_test
 /home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/rules_defs.mk:16: warning: overriding commands for target `print'
 /home/ballance/dirs/infact/work/projects/pss_examples/infact_dma_block2soc/rtl/mor1kx_soc/sw/uex/ve/googletest_uvm/src/rules_defs.mk:28: warning: ignoring old commands for target `print'
 make: Entering directory `/export/scratch/ballance/rundir/ve/none'

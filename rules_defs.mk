@@ -9,11 +9,14 @@ UEX_SRC := $(notdir $(wildcard $(UEX_SRC_DIR)/*.c))
 
 SRC_DIRS += $(UEX_SRC_DIR)
 
+LIBUEX := libuex.o
+
 else
 
 libuex.o : $(UEX_SRC:.c=.o)
-	rm -f $@
-	$(LD) -r -o $@ $^
+	$(Q)rm -f $@
+	$(Q)$(LD) -r -o $@ $^
+	
 
 endif
 

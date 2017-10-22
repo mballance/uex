@@ -5,13 +5,13 @@ ifneq (1,$(RULES))
 
 SRC_DIRS += $(UEX_SV_IMPL_DIR)
 
-UEX_SV_DPI_SRC := $(notdir $(wildcard $(UEX_SV_IMPL_DIR)/*.c))
+UEX_SV_DPI_SRC := $(notdir $(wildcard $(UEX_SV_IMPL_DIR)/*.cpp))
 
 DPI_OBJS_LIBS += libuex_sv_dpi.o
 
 else
 
-libuex_sv_dpi.o : $(UEX_SV_DPI_SRC:.c=.o)
+libuex_sv_dpi.o : $(UEX_SV_DPI_SRC:.cpp=.o)
 	rm -f $@
 	$(LD) -r -o $@ $^
 

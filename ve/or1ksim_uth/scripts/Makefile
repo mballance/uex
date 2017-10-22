@@ -17,12 +17,12 @@ DPI_OBJS_LIBS += test_sw.o uex.o
 	
 MK_INCLUDES += $(GOOGLETEST_UVM)/src/rules_defs.mk
 MK_INCLUDES += $(UEX)/rules_defs.mk
-MK_INCLUDES += $(UEX)/impl/uth/rules_defs.mk
-MK_INCLUDES += $(UEX)/impl/uth/or1k/rules_defs.mk
+MK_INCLUDES += $(UEX)/impl/threading/uth/rules_defs.mk
+MK_INCLUDES += $(UEX)/impl/threading/uth/or1k/rules_defs.mk
 MK_INCLUDES += $(SIM_DIR)/../tests/rules_defs.mk
 	
 TEST_LIBS += libuex.o googletest.o libuex_uth.o
-TEST_LIBS += libuth.o libuth_or1k.o
+TEST_LIBS += libuex_uth_or1k.o
 TEST_LIBS += libuex_tests.o
 
 BUILD_COMPILE_TARGETS += $(TEST_LIBS)

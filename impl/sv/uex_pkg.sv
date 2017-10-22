@@ -8,6 +8,8 @@
  * TODO: Add package documentation
  */
 package uex_pkg;
+	`include "uex_memalloc.svh"
+	`include "uex_mem_services.svh"
 	
 	typedef class uex_thread;
 	typedef class uex_mutex;
@@ -19,6 +21,7 @@ package uex_pkg;
 	int unsigned			m_active;
 	uex_thread				m_blocked[$];
 	semaphore				m_irq_sem = new(1);
+	uex_mem_services		m_mem_services;
 	
 	class uex_thread;
 		int unsigned		m_tid;
@@ -40,13 +43,15 @@ package uex_pkg;
 			_uex_yield();
 			_uex_thread_main(m_main_f, m_ud);
 			m_join.put(1);
-			// Delete ourselves
-			m_thread_l[m_tid-1] = null;
 		endtask
 		
 		task do_join();
 			int unsigned sleeping_thread = m_active;
 			m_join.get(1);
+			
+			// Delete thread once another thread joins
+			m_thread_l[m_tid] = null;
+			
 			m_active = sleeping_thread;
 		endtask
 	endclass
@@ -98,7 +103,8 @@ package uex_pkg;
 	
 	task automatic _uex_create_thread(
 		chandle				main_f,
-		chandle				ud);
+		chandle				ud,
+		output int unsigned	tid);
 		uex_thread t;
 		int tid_i = -1;
 
@@ -117,8 +123,11 @@ package uex_pkg;
 			m_thread_l.push_back(null);
 		end
 
-		t = new(tid_i+1, main_f, ud);
+		t = new(tid_i, main_f, ud);
 		m_thread_l[tid_i] = t;
+	
+		// Return the TID
+		tid = tid_i;
 	
 		// What is the active thread?
 		start_thread(t);
@@ -138,6 +147,7 @@ package uex_pkg;
 	
 	task automatic _uex_thread_join(int unsigned tid);
 		uex_thread t = m_thread_l[tid];
+		
 		if (t != null) begin
 			t.do_join();
 		end
@@ -235,14 +245,58 @@ package uex_pkg;
 			chandle				ud);
 
 	import "DPI-C" context function int _uex_init();
-	int _initialized = _uex_init();
+	function automatic int do_uex_init();
+		// Create a representation for the main thread
+		uex_thread t = new(0, null, null);
+		m_thread_l.push_back(t);
+		
+		return _uex_init();
+	endfunction
+	int _initialized = do_uex_init();
 	
-	task automatic uex_irq();
+	task automatic uex_irq(int unsigned id);
 		m_irq_sem.get(1);
-		_uex_irq();
+		_uex_irq(id);
 		m_irq_sem.put(1);
 	endtask
-	import "DPI-C" context task _uex_irq();
+	import "DPI-C" context task _uex_irq(int unsigned id);
+
+	task automatic _uex_iowrite8(byte unsigned data, longint unsigned addr);
+		m_mem_services.iowrite8(data, addr);
+	endtask
+	export "DPI-C" task _uex_iowrite8;
+	
+	task automatic _uex_ioread8(output byte unsigned data, input longint unsigned addr);
+		m_mem_services.ioread8(data, addr);
+	endtask
+	export "DPI-C" task _uex_ioread8;
+	
+	task automatic _uex_iowrite16(shortint unsigned data, longint unsigned addr);
+		m_mem_services.iowrite16(data, addr);
+	endtask
+	export "DPI-C" task _uex_iowrite16;
+	
+	task automatic _uex_ioread16(output shortint unsigned data, input longint unsigned addr);
+		m_mem_services.ioread16(data, addr);
+	endtask
+	export "DPI-C" task _uex_ioread16;
+	
+	task automatic _uex_iowrite32(int unsigned data, longint unsigned addr);
+		m_mem_services.iowrite32(data, addr);
+	endtask
+	export "DPI-C" task _uex_iowrite32;
+	
+	task automatic _uex_ioread32(output int unsigned data, input longint unsigned addr);
+		m_mem_services.ioread32(data, addr);
+	endtask	
+	export "DPI-C" task _uex_ioread32;
+	
+	task automatic _uex_ioalloc(
+		int unsigned sz, 
+		int unsigned align,
+		int unsigned flags);
+	endtask
+	export "DPI-C" task _uex_ioalloc;
 
 endpackage
 
