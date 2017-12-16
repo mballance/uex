@@ -10,6 +10,7 @@
  * - uex_mutex_t
  */
 #include "uex_sys.h"
+#include <sys/types.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -69,25 +70,58 @@ void uex_set_irq_handler(
  * Devices
  ********************************************************************/
 
-typedef struct uex_device_s {
-	// String name for the device
-	const char		*name;
-	// Physical base address of the device
-	void			*addr;
+typedef enum {
+	UEX_DEV_CHAR,
+	UEX_DEV_BLOCK,
+	UEX_DEV_NONE
+} uex_dev_type_e;
 
-	// Size (bytes) of the address range
-	uint32_t		size;
+struct uex_dev_s;
+
+typedef void (*uex_dev_init_f)(uex_dev_s *dev, void *addr);
+
+typedef struct uex_dev_api_s {
+	int (*write)(uex_dev_s *dev, void *data, size_t sz, int flags);
+	int (*read)(uex_dev_s *dev, void *data, size_t sz, int flags);
+	int (*ioctl)(uex_dev_s *dev, uint32_t cmd, void *arg);
+} uex_dev_api_t;
+
+typedef struct uex_dev_s {
+	// String name for the device
+	const char			*name;
+
+	uex_dev_type_e		type;
+
+	// Physical base address of the device
+	void				*addr;
+
+	// Driver data (often staticaly allocated)
+	void				*data;
+
+	// Initialization function for the device
+	uex_dev_init_f		init;
 
 	// List of interrupt numbers associated with the device
-	uint16_t		irqs[4];
-	uint32_t		n_irq;
-} uex_device_t;
+	uint16_t			irqs[4];
+	uint32_t			n_irqs;
 
-const uex_device_t *uex_find_device(void *addr);
+	uex_dev_api_t		api;
 
-void uex_get_devices(
-		uex_device_t		*devices,
-		uint32_t			*n_devices);
+} uex_dev_t;
+
+typedef struct uex_devtree_s {
+	const char					*name;
+	struct uex_devtree_s		*parent;
+	struct uex_devtree_s		*sibling;
+	struct uex_devtree_s		*next;
+	uex_dev_t					devices[];
+} uex_devtree_t;
+
+const uex_dev_t *uex_find_device(void *addr);
+
+const uex_dev_t *udx_find_device_by_name(const char *name);
+
+uex_devtree_t *uex_get_devtree();
 
 /********************************************************************
  * Memory Management
@@ -118,7 +152,8 @@ void *uex_ioremap(void *p, uint32_t sz, uint32_t flags);
 /**
  * uex_iounmap()
  *
- * Unmaps a previous I/O address mapping. May be
+ * Unmaps a previous I/O address mapping. In the simplest case,
+ * this will be a NOP
  */
 void uex_iounmap(void *p);
 

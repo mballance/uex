@@ -11,7 +11,7 @@ SRC_DIRS += $(UEX_SRC_DIR)
 
 LIBUEX := libuex.o
 
-else
+else # Rules
 
 libuex.o : $(UEX_SRC:.c=.o)
 	$(Q)rm -f $@
