@@ -34,18 +34,18 @@ TEST(UEX,sv_irq_test) {
 	fprintf(stdout, "Hello there\n");
 	fflush(stdout);
 
-	uex_sv_set_interrupt_handler(&irq_handler, 0);
+//	uex_sv_set_interrupt_handler(&irq_handler, 0);
 
 	uex_cond_init(&m_cond);
 	uex_mutex_init(&m_mutex);
 
 	// First, register a couple of devices
-	uex_set_irq_id((uint32_t *)0x1000, 0);
-	uex_set_irq_id((uint32_t *)0x2000, 1);
+//	uex_set_irq_id((uint32_t *)0x1000, 0);
+//	uex_set_irq_id((uint32_t *)0x2000, 1);
 
 	// Now, register interrupts
-	uex_set_irq_handler(uex_get_irq((uint32_t *)0x1000), &irq0, 0);
-	uex_set_irq_handler(uex_get_irq((uint32_t *)0x2000), &irq1, 0);
+//	uex_set_irq_handler(uex_get_irq((uint32_t *)0x1000), &irq0, 0);
+//	uex_set_irq_handler(uex_get_irq((uint32_t *)0x2000), &irq1, 0);
 
 	for (int i=0; i<16; i++) {
 		fprintf(stdout, "--> wait irq\n");

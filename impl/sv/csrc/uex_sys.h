@@ -7,9 +7,9 @@
 #define INCLUDED_UEX_SYS_H
 #include <stdint.h>
 
-typedef uint32_t uex_thread_t;
-typedef uint32_t uex_mutex_t;
-typedef uint32_t uex_cond_t;
+//typedef uint32_t uex_thread_t;
+//typedef uint32_t uex_mutex_t;
+//typedef uint32_t uex_cond_t;
 
 
 // SystemVerilog-specific functions

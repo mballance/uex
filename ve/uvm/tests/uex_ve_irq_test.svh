@@ -37,7 +37,7 @@ class uex_ve_irq_test extends uex_ve_test_base;
 			begin
 				repeat (16) begin
 					#1;
-					uex_pkg::uex_irq();
+//TODO:					uex_pkg::uex_irq();
 				end
 			end
 		join

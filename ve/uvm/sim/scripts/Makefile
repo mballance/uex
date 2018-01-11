@@ -4,13 +4,9 @@ include $(SIMSCRIPTS_DIR)/mkfiles/plusargs.mk
 TB=uex_ve_tb
 DPI_OBJS_LIBS += test_sw.o uex.o
 	
-MK_INCLUDES += $(GOOGLETEST_UVM)/src/rules_defs.mk
-#MK_INCLUDES += $(UEX)/rules_defs.mk
-	
-UEX_SRC := \
-	$(notdir $(wildcard $(SIM_DIR)/../../*.c)) \
-	uex_sys_dpi.c
-		
+MK_INCLUDES += $(GOOGLETEST_UVM)/src/googletest_uvm.mk
+MK_INCLUDES += $(UEX)/uex.mk
+MK_INCLUDES += $(UEX)/impl/sv/uex_env_sv.mk
 	
 TEST_SW_SRC := $(notdir $(wildcard $(SIM_DIR)/../tests/sw/*.cpp))
 

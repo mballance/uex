@@ -14,16 +14,7 @@ class uex_basic_memalloc extends uex_memalloc;
 	function new(longint unsigned base, longint unsigned size);
 	endfunction
 
-	virtual function longint unsigned ioalloc(
-		int unsigned 	sz,
-		int unsigned	align,
-		int unsigned	flags);
-		
-	endfunction
-	
-	virtual function void iofree(longint unsigned p);
-		
-	endfunction
+
 	
 
 endclass

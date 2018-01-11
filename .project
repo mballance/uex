@@ -24,4 +24,14 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
+	<variableList>
+		<variable>
+			<name>GOOGLETEST_UVM</name>
+			<value>$%7BPROJECT_LOC%7D/ve/googletest_uvm</value>
+		</variable>
+		<variable>
+			<name>UEX</name>
+			<value>$%7BPROJECT_LOC%7D</value>
+		</variable>
+	</variableList>
 </projectDescription>

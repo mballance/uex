@@ -1,3 +1,7 @@
+/****************************************************************************
+ * uex_mem_services.h
+ ****************************************************************************/
+#include "uex_mem_services.h"
 #include <stdint.h>
 
 void uex_iomemset(void *p, uint8_t v, uint32_t count) {

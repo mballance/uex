@@ -26,12 +26,14 @@ TEST(UEX,basic_irq_test) {
 	fflush(stdout);
 
 	// First, register a couple of devices
-	uex_set_irq_id((uint32_t *)0x1000, 0);
-	uex_set_irq_id((uint32_t *)0x2000, 1);
+//	uex_set_irq_id((uint32_t *)0x1000, 0);
+//	uex_set_irq_id((uint32_t *)0x2000, 1);
 
 	// Now, register interrupts
+#if 0
 	uex_set_irq_handler(uex_get_irq((uint32_t *)0x1000), &irq0, 0);
 	uex_set_irq_handler(uex_get_irq((uint32_t *)0x2000), &irq1, 0);
+#endif
 
 	for (int i=0; i<16; i++) {
 		uex_trigger_irq((i%2));

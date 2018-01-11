@@ -4,7 +4,7 @@
 
 ${GOOGLETEST_UVM}/src/googletest_uvm_pkg.sv
 
-${UEX}/impl/sv/uex_pkg.sv
+-f ${UEX}/impl/sv/svsrc/uex.f
 
 ${SIM_DIR_A}/../tb/uex_ve_env_pkg.sv
 
