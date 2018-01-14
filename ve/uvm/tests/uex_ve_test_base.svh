@@ -1,6 +1,6 @@
 
 
-class uex_ve_test_base extends uvm_test;
+class uex_ve_test_base extends uvm_test implements uex_sys_main;
 	
 	`uvm_component_utils(uex_ve_test_base)
 	
@@ -16,19 +16,31 @@ class uex_ve_test_base extends uvm_test;
 		m_env = uex_ve_env::type_id::create("m_env", this);
 	endfunction
 	
+	virtual function uex_sys create_sys();
+		uex_sys sys = new("sys", this);
+		return sys;
+	endfunction
+	
 	task run_phase(uvm_phase phase);
 		int status;
-		string sw_testname;
-		
-		if (!$value$plusargs("SW_TESTNAME=%s", sw_testname)) begin
-			`uvm_fatal(get_name(), "Failed to specify +SW_TESTNAME=<name>");
-		end
+		uex_sys sys = create_sys();
 		
 		phase.raise_objection(this, "Main");
-		googletest_uvm_pkg::run_all_tests(sw_testname);
+		sys.run();
 		phase.drop_objection(this, "Main");
 		
 		$display("NOTE: test status: %0d", status);
+	endtask
+	
+	virtual task main();
+		string sw_testname;
+		
+		$display("--> main()");
+		if (!$value$plusargs("SW_TESTNAME=%s", sw_testname)) begin
+			`uvm_fatal(get_name(), "Failed to specify +SW_TESTNAME=<name>");
+		end
+		googletest_uvm_pkg::run_all_tests(sw_testname);
+		$display("<-- main()");
 	endtask
 	
 

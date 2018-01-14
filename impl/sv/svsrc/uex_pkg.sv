@@ -12,7 +12,7 @@ package uex_pkg;
 	`include "uex_mem_alloc_services.svh"
 	`include "uex_mem_services.svh"
 	`include "uex_global.svh"
-	uex_global				m_global = uex_global::init();
+	uex_global				m_global = uex_global::dflt();
 	
 	`include "uex_sys_main.svh"
 	`include "uex_sys.svh"

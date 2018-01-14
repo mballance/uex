@@ -18,10 +18,10 @@ class uex_cond;
 	endfunction
 		
 	task cond_wait();
-//		int unsigned sleeping_thread = m_active;
-//		m_waiters++;
-//		m_sem.get(1);
-//		m_active = sleeping_thread;
+		uex_active_s sleeping_thread = m_global.get_active();
+		m_waiters++;
+		m_sem.get(1);
+		m_global.set_active(sleeping_thread);
 	endtask
 		
 	task cond_signal();

@@ -9,6 +9,11 @@
 #define INCLUDED_UEX_SYS_SERVICES_H
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /********************************************************************
  * uex_init()
  *
@@ -31,6 +36,9 @@ void uex_devtree_init(void);
  ********************************************************************/
 uint32_t uex_get_nprocs(void);
 
+#ifdef __cplusplus
+}
+#endif
 
 
 #endif /* INCLUDED_UEX_SYS_SERVICES_H */

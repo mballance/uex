@@ -14,7 +14,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-int _uex_create_thread(uex_thread_f, void *, uint32_t *);
+int _uex_create_thread(uex_thread_f, void *, uint32_t *, uint64_t);
 int _uex_thread_join(uint32_t tid);
 uint32_t _uex_mutex_init(void);
 int _uex_mutex_lock(uint32_t mid);
@@ -25,15 +25,14 @@ int _uex_cond_signal(uint32_t c);
 int _uex_yield(void);
 int _uex_init(void);
 uint32_t _uex_thread_self(void);
-
+int _uex_thread_main(
+		uex_thread_f	main_f,
+		void 			*ud);
 #ifdef __cplusplus
 }
 #endif
 
 
-int _uex_thread_main(
-		uex_thread_f	main_f,
-		void 			*ud);
 
 int _uex_thread_main(
 		uex_thread_f	main_f,
@@ -56,7 +55,31 @@ uex_thread_t uex_thread_create(
 	uex_thread_t tid;
 
 	fprintf(stdout, "--> create %p\n", ud);
-	if (_uex_create_thread(main_f, ud, &tid)) {
+	if (_uex_create_thread(main_f, ud, &tid, 0)) {
+		svAckDisabledState();
+		throw std::runtime_error("uex_thread_create");
+	}
+	fprintf(stdout, "<-- create %p\n", ud);
+
+	return tid;
+}
+
+uex_thread_t uex_thread_create_affinity(
+		uex_thread_f		main_f,
+		void				*ud,
+		uex_cpu_set_t		*affinity) {
+	uint64_t affinity_v = 0;
+	svSetScope(uex_svScope());
+	uex_thread_t tid;
+
+	for (uint32_t i=0; i<UEX_MAX_CPUS/8 && i<8; i++) {
+		uint64_t tmp = affinity->mask[i];
+		tmp <<= 8*i;
+		affinity_v |= tmp;
+	}
+
+	fprintf(stdout, "--> create %p\n", ud);
+	if (_uex_create_thread(main_f, ud, &tid, affinity_v)) {
 		svAckDisabledState();
 		throw std::runtime_error("uex_thread_create");
 	}

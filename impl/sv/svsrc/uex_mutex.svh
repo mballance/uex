@@ -17,9 +17,9 @@ class uex_mutex;
 	endfunction
 		
 	task lock();
-		int unsigned sleeping_thread = m_global.m_active;
+		uex_active_s sleeping_thread = m_global.get_active();
 		m_sem.get(1);
-		m_global.m_active = sleeping_thread;
+		m_global.set_active(sleeping_thread);
 	endtask
 		
 	task unlock();

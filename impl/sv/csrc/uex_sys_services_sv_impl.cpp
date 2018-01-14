@@ -19,9 +19,27 @@ static uint32_t					prv_nprocs = 0;
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+int _uex_init();
+
+void *_uex_sys_new(unsigned int sys_id);
+
+uint32_t _uex_get_nprocs();
+
 #ifdef __cplusplus
 }
 #endif
+
+int _uex_init() {
+	m_scope = svGetScope();
+	return 0;
+}
+
+void *_uex_sys_new(unsigned int sys_id) {
+	// TODO:
+	return 0;
+}
+
 
 void *uex_svScope() {
 	return m_scope;
@@ -40,7 +58,7 @@ void uex_sys_init(void) {
  * Returns the number of processors available on the system.
  ********************************************************************/
 uint32_t uex_get_nprocs(void) {
-	return prv_nprocs;
+	return _uex_get_nprocs();
 }
 
 

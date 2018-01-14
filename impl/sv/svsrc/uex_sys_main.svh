@@ -7,10 +7,9 @@
  * 
  * TODO: Add class documentation
  */
-class uex_sys_main;
+interface class uex_sys_main;
 
-	virtual task main();
-	endtask
+	pure virtual task main();
 
 endclass
 

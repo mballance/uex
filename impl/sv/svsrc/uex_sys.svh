@@ -12,7 +12,7 @@ typedef class uex_mem_services;
  * 
  * TODO: Add class documentation
  */
-class uex_sys extends uex_sys_main implements uex_mem_services;
+class uex_sys implements uex_sys_main;
 
 	string					m_name;
 	chandle					m_sys_h;
@@ -21,14 +21,11 @@ class uex_sys extends uex_sys_main implements uex_mem_services;
 	uex_thread				m_thread_l[$];
 	uex_mutex				m_mutex_l[$];
 	uex_cond				m_cond_l[$];
-	int unsigned			m_active;
-	int unsigned			m_active_core;
 	uex_thread				m_blocked[$];
 	semaphore				m_irq_sem = new(1);
 	uex_mem_services		m_mem_services;
 	uex_mem_services		m_cores[$];
 	uex_sys_main			m_main = null;
-//	semaphore				m_irq_sem = new(1);
 	
 	function new(string name="", uex_sys_main main=null);
 		m_name = name;
@@ -65,65 +62,6 @@ class uex_sys extends uex_sys_main implements uex_mem_services;
 		_uex_irq(id);
 		m_irq_sem.put(1);		
 	endtask
-
-	virtual task iowrite8(
-		byte unsigned data, 
-		longint unsigned addr);
-		m_cores[m_active_core].iowrite8(data, addr);
-	endtask
-	
-	virtual task ioread8(
-		output byte unsigned data, 
-		input longint unsigned addr);
-		m_cores[m_active_core].ioread8(data, addr);
-	endtask
-	
-	virtual task iowrite16(
-		shortint unsigned data, 
-		longint unsigned addr);
-		m_cores[m_active_core].iowrite16(data, addr);
-	endtask
-	
-	virtual task ioread16(
-		output shortint unsigned data, 
-		input longint unsigned addr);
-		m_cores[m_active_core].ioread16(data, addr);
-	endtask
-	
-	virtual task iowrite32(
-		int unsigned data, 
-		longint unsigned addr);
-		m_cores[m_active_core].iowrite32(data, addr);
-	endtask
-	
-	virtual task ioread32(
-		output int unsigned data, 
-		input longint unsigned addr);
-		m_cores[m_active_core].ioread32(data, addr);
-	endtask
-	
-	virtual task iowrite64(
-		longint unsigned data, 
-		longint unsigned addr);
-		m_cores[m_active_core].iowrite64(data, addr);
-	endtask
-	
-	virtual task ioread64(
-		output longint unsigned data, 
-		input longint unsigned addr);
-		m_cores[m_active_core].ioread64(data, addr);
-	endtask	
-	
-	virtual function longint unsigned ioalloc(
-		int unsigned 	sz,
-		int unsigned	align,
-		int unsigned	flags);
-		return m_cores[m_active_core].ioalloc(sz, align, flags);
-	endfunction
-	
-	virtual function void iofree(longint unsigned p);
-		m_cores[m_active_core].iofree(p);
-	endfunction
 	
 endclass
 
@@ -179,3 +117,7 @@ export "DPI-C" function _uex_ioalloc;
 
 import "DPI-C" context task _uex_irq(int unsigned id);
 
+function automatic int unsigned _uex_get_nprocs();
+	return m_global.get_nprocs();
+endfunction
+export "DPI-C" function _uex_get_nprocs;

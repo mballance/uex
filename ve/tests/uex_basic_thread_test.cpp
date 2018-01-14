@@ -19,8 +19,11 @@ int thread2_main(void *ud) {
 }
 
 TEST(UEX,basic_thread_test) {
+
 	fprintf(stdout, "Hello there\n");
 	fflush(stdout);
+
+	uex_init();
 
 	uex_thread_t thread1 = uex_thread_create(&thread1_main, 0);
 	uex_thread_t thread2 = uex_thread_create(&thread2_main, 0);
