@@ -13,6 +13,8 @@ class uex_thread;
 	chandle				m_ud;
 	semaphore			m_join = new(0);
 	longint unsigned	m_affinity;
+	int					m_core;
+	int					m_sys;
 		
 	function new(
 		int unsigned 		tid,
@@ -27,12 +29,18 @@ class uex_thread;
 		
 	task run();
 		uex_active_s active = m_global.get_active();
+		process p = process::self();
+		
 		active.active_thread = m_tid;
 		m_global.set_active(active); // preload so yield sets active correctly
+		
+		m_global.set_thread_process(p, this);
 
 		_uex_yield();
 		_uex_thread_main(m_main_f, m_ud);
 		m_join.put(1);
+		
+		m_global.clr_thread_process(p);
 	endtask
 		
 	task do_join();
@@ -76,3 +84,6 @@ task automatic _uex_yield();
 endtask
 export "DPI-C" task _uex_yield;
 
+import "DPI-C" context task _uex_thread_main(
+	chandle				main_f,
+	chandle				ud);

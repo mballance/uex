@@ -7,11 +7,19 @@
 
 #ifndef IMPL_SV_UEX_THREAD_SERVICES_TARGET_H_
 #define IMPL_SV_UEX_THREAD_SERVICES_TARGET_H_
+#include <stdint.h>
 
 typedef uint32_t uex_thread_t;
-typedef uint32_t uex_mutex_t;
-typedef uint32_t uex_cond_t;
 
+typedef struct uex_mutex_s {
+	uint32_t			sem_id;
+	uint32_t			sem_refcnt;
+} uex_mutex_t;
+
+typedef struct uex_cond_s {
+	uint32_t			sem_id;
+	uint32_t			waiters;
+} uex_cond_t;
 
 
 #endif /* IMPL_SV_UEX_THREAD_SERVICES_TARGET_H_ */

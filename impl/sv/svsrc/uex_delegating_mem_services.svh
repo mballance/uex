@@ -9,7 +9,7 @@
  */
 class uex_delegating_mem_services implements uex_mem_services;
 	uex_mem_access_services			m_access;
-	uex_mem_alloc_servics			m_alloc;
+	uex_mem_alloc_services			m_alloc;
 
 	function new(
 		uex_mem_access_services		access,

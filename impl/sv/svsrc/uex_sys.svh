@@ -3,8 +3,6 @@
  ****************************************************************************/
 
 typedef class uex_thread;
-typedef class uex_mutex;
-typedef class uex_cond;
 typedef class uex_mem_services;
 
 /**
@@ -19,8 +17,6 @@ class uex_sys implements uex_sys_main;
 	int unsigned			m_sys_id;
 	
 	uex_thread				m_thread_l[$];
-	uex_mutex				m_mutex_l[$];
-	uex_cond				m_cond_l[$];
 	uex_thread				m_blocked[$];
 	semaphore				m_irq_sem = new(1);
 	uex_mem_services		m_mem_services;
@@ -40,15 +36,30 @@ class uex_sys implements uex_sys_main;
 		// Create a new host-side representation
 		m_sys_h = _uex_sys_new(m_sys_id);
 	endfunction
+	
+	function void add_core(uex_mem_services core);
+		m_cores.push_back(core);
+	endfunction
 
 	// Run 
 	task run();
-		int unsigned prev_active_sys = uex_pkg::m_global.get_active_sys();
+		int tid = m_global.alloc_thread(null, null, 1);
+		uex_thread t = m_global.get_thread(tid);
+		process p = process::self();
+		
+		m_global.set_thread_process(p, t);
+		
+//		int unsigned prev_active_sys = uex_pkg::m_global.get_active_sys();
 		
 		// Set system context
-		uex_pkg::m_global.set_active_sys(m_sys_id);
+//		uex_pkg::m_global.set_active_sys(m_sys_id);
+		
 		m_main.main();
-		uex_pkg::m_global.set_active_sys(prev_active_sys);
+		
+		m_global.clr_thread_process(p);
+		m_global.free_thread(tid);
+
+//		uex_pkg::m_global.set_active_sys(prev_active_sys);
 	endtask
 
 	virtual task main();

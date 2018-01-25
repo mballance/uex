@@ -16,12 +16,12 @@ extern "C" {
 #endif
 int _uex_create_thread(uex_thread_f, void *, uint32_t *, uint64_t);
 int _uex_thread_join(uint32_t tid);
-uint32_t _uex_mutex_init(void);
-int _uex_mutex_lock(uint32_t mid);
+uint32_t _uex_alloc_sem(int unsigned init);
+void _uex_free_sem(uint32_t sem_id);
+int _uex_mutex_lock(uint32_t sem_id);
 int _uex_mutex_unlock(uint32_t mid);
-uint32_t _uex_cond_init(void);
 int _uex_cond_wait(uint32_t c, uint32_t m);
-int _uex_cond_signal(uint32_t c);
+int _uex_cond_signal(uint32_t c, uint32_t waiters);
 int _uex_yield(void);
 int _uex_init(void);
 uint32_t _uex_thread_self(void);
@@ -111,13 +111,17 @@ uex_thread_t uex_thread_self(void) {
 }
 
 void uex_mutex_init(uex_mutex_t *m) {
-	svSetScope(uex_svScope());
-	*m = _uex_mutex_init();
+	memset(m, 0, sizeof(uex_mutex_t));
 }
 
 void uex_mutex_lock(uex_mutex_t *m) {
 	svSetScope(uex_svScope());
-	if (_uex_mutex_lock(*m)) {
+	if (!m->sem_id) {
+		m->sem_id = _uex_alloc_sem(1);
+		m->sem_refcnt = 1;
+	}
+
+	if (_uex_mutex_lock(m->sem_id)) {
 		// TODO: throw exception
 		svAckDisabledState();
 		throw std::runtime_error("uex_mutex_lock");
@@ -126,28 +130,49 @@ void uex_mutex_lock(uex_mutex_t *m) {
 
 void uex_mutex_unlock(uex_mutex_t *m) {
 	svSetScope(uex_svScope());
-	if (_uex_mutex_unlock(*m)) {
+	if (_uex_mutex_unlock(m->sem_id)) {
 		svAckDisabledState();
 		throw std::runtime_error("uex_mutex_unlock");
+	}
+
+	if ((m->sem_refcnt--) == 0) {
+		_uex_free_sem(m->sem_id);
+		m->sem_id = 0;
 	}
 }
 
 void uex_cond_init(uex_cond_t *c) {
 	svSetScope(uex_svScope());
-	*c = _uex_cond_init();
+	memset(c, 0, sizeof(uex_cond_t));
 }
 
 void uex_cond_wait(uex_cond_t *c, uex_mutex_t *m) {
 	svSetScope(uex_svScope());
-	if (_uex_cond_wait(*c, *m)) {
+
+	if (c->sem_id == 0) {
+		c->sem_id = _uex_alloc_sem(0);
+	}
+	c->waiters++;
+
+	if (!m->sem_id) {
+		fprintf(stdout, "Error: mutex not locked\n");
+	}
+
+	if (_uex_cond_wait(c->sem_id, m->sem_id)) {
 		svAckDisabledState();
 		throw std::runtime_error("uex_cond_wait");
+	}
+
+	if ((c->waiters--) == 0) {
+		// Free the semaphore
+		_uex_free_sem(c->sem_id);
+		c->sem_id = 0;
 	}
 }
 
 void uex_cond_signal(uex_cond_t *c) {
 	svSetScope(uex_svScope());
-	if (_uex_cond_signal(*c)) {
+	if (_uex_cond_signal(c->sem_id, c->waiters)) {
 		svAckDisabledState();
 		throw std::runtime_error("uex_cond_signal");
 	}
