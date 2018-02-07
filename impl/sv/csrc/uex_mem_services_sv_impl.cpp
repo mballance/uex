@@ -47,6 +47,7 @@ void uex_iounmap(void *p) {
 
 void uex_iowrite8(uint8_t v, void *p) {
 	uint64_t a = reinterpret_cast<uint64_t>(p);
+	svSetScope(uex_svScope());
 	if (_uex_iowrite8(v, a)) {
 		throw std::runtime_error("uex_iowrite8");
 	}
