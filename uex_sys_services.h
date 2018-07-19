@@ -36,6 +36,13 @@ void uex_devtree_init(void);
  ********************************************************************/
 uint32_t uex_get_nprocs(void);
 
+/********************************************************************
+ * uex_get_time_ns()
+ *
+ * Returns the current time in nS
+ ********************************************************************/
+uint64_t uex_get_time_ns(void);
+
 #ifdef __cplusplus
 }
 #endif

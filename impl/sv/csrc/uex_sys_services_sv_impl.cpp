@@ -26,6 +26,8 @@ void *_uex_sys_new(unsigned int sys_id);
 
 uint32_t _uex_get_nprocs();
 
+uint64_t _uex_get_time_ns();
+
 #ifdef __cplusplus
 }
 #endif
@@ -58,9 +60,17 @@ void uex_sys_init(void) {
  * Returns the number of processors available on the system.
  ********************************************************************/
 uint32_t uex_get_nprocs(void) {
+	svSetScope(m_scope);
 	return _uex_get_nprocs();
 }
 
+/********************************************************************
+ * uex_get_time_ns()
+ ********************************************************************/
+uint64_t uex_get_time_ns(void) {
+	svSetScope(m_scope);
+	return _uex_get_time_ns();
+}
 
 // Exported DPI task
 //int _uex_irq(uint32_t id) {

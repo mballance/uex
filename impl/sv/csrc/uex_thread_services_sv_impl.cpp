@@ -38,9 +38,7 @@ int _uex_thread_main(
 		uex_thread_f	main_f,
 		void 			*ud) {
 	try {
-		fprintf(stdout, "--> main %p\n", ud);
 		main_f(ud);
-		fprintf(stdout, "<-- main %p\n", ud);
 	} catch (std::runtime_error &e) {
 		svAckDisabledState();
 		return 1;
@@ -54,12 +52,10 @@ uex_thread_t uex_thread_create(
 	svSetScope(uex_svScope());
 	uex_thread_t tid;
 
-	fprintf(stdout, "--> create %p\n", ud);
 	if (_uex_create_thread(main_f, ud, &tid, 0)) {
 		svAckDisabledState();
 		throw std::runtime_error("uex_thread_create");
 	}
-	fprintf(stdout, "<-- create %p\n", ud);
 
 	return tid;
 }
@@ -78,12 +74,10 @@ uex_thread_t uex_thread_create_affinity(
 		affinity_v |= tmp;
 	}
 
-	fprintf(stdout, "--> create %p\n", ud);
 	if (_uex_create_thread(main_f, ud, &tid, affinity_v)) {
 		svAckDisabledState();
 		throw std::runtime_error("uex_thread_create");
 	}
-	fprintf(stdout, "<-- create %p\n", ud);
 
 	return tid;
 }

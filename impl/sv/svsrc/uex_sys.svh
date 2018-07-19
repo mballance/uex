@@ -131,4 +131,10 @@ import "DPI-C" context task _uex_irq(int unsigned id);
 function automatic int unsigned _uex_get_nprocs();
 	return m_global.get_nprocs();
 endfunction
+
+function automatic longint unsigned _uex_get_time_ns();
+	return $time;
+endfunction
+export "DPI-C" function _uex_get_time_ns;
+
 export "DPI-C" function _uex_get_nprocs;
