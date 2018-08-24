@@ -9,8 +9,7 @@
  */
 class uex_thread;
 	int unsigned		m_tid;
-	chandle				m_main_f;
-	chandle				m_ud;
+	uex_run_if			m_run_if;
 	semaphore			m_join = new(0);
 	longint unsigned	m_affinity;
 	int					m_core;
@@ -18,12 +17,10 @@ class uex_thread;
 		
 	function new(
 		int unsigned 		tid,
-		chandle				main_f,
-		chandle				ud,
+		uex_run_if			run_if,
 		longint unsigned	affinity);
 		m_tid = tid;
-		m_main_f = main_f;
-		m_ud = ud;
+		m_run_if = run_if;
 		m_affinity = affinity;
 	endfunction
 		
@@ -37,7 +34,7 @@ class uex_thread;
 		m_global.set_thread_process(p, this);
 
 		_uex_yield();
-		_uex_thread_main(m_main_f, m_ud);
+		m_run_if.run();
 		m_join.put(1);
 		
 		m_global.clr_thread_process(p);
@@ -60,9 +57,10 @@ task automatic _uex_create_thread(
 	output int unsigned		tid,
 	input longint unsigned	affinity);
 	uex_thread t;
+	uex_native_runner runner = new(main_f, ud);
 
 	// Return the TID
-	tid = m_global.alloc_thread(main_f, ud, affinity);
+	tid = m_global.alloc_thread(runner, affinity);
 	m_global.start_thread(tid);
 	
 endtask

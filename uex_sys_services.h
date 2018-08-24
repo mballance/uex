@@ -13,21 +13,19 @@
 extern "C" {
 #endif
 
+struct uex_dev_s;
+
 
 /********************************************************************
  * uex_init()
  *
  * Must be called once from the main thread prior to using any
  * UEX services
- ********************************************************************/
-void uex_init(void);
-
-/********************************************************************
- * uex_devtree_init()
  *
- * Initialization function provided by the platform
+ * - Initializes all devices
+ * - Calls sys_init hook
  ********************************************************************/
-void uex_devtree_init(void);
+void uex_init(struct uex_dev_s **devices, uint32_t n_devices);
 
 /********************************************************************
  * uex_get_nprocs()

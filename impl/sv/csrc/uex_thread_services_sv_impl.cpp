@@ -165,10 +165,13 @@ void uex_cond_wait(uex_cond_t *c, uex_mutex_t *m) {
 }
 
 void uex_cond_signal(uex_cond_t *c) {
-	svSetScope(uex_svScope());
-	if (_uex_cond_signal(c->sem_id, c->waiters)) {
-		svAckDisabledState();
-		throw std::runtime_error("uex_cond_signal");
+	// Only signal if someone is waiting
+	if (c->sem_id > 0) {
+		svSetScope(uex_svScope());
+		if (_uex_cond_signal(c->sem_id, c->waiters)) {
+			svAckDisabledState();
+			throw std::runtime_error("uex_cond_signal");
+		}
 	}
 }
 

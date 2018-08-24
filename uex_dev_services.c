@@ -1,7 +1,7 @@
 
 #include "uex.h"
 
-static uex_devtree_t	*devtree;
+//static uex_devtree_t	*devtree;
 
 
 //void uex_set_devtree(

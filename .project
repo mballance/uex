@@ -30,6 +30,13 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 		<nature>net.sf.sveditor.core.SVNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>External SV Files</name>
+			<type>2</type>
+			<locationURI>svext://uex</locationURI>
+		</link>
+	</linkedResources>
 	<variableList>
 		<variable>
 			<name>GOOGLETEST_UVM</name>

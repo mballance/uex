@@ -75,8 +75,7 @@ class uex_global implements uex_mem_services;
 	endfunction
 	
 	function int unsigned alloc_thread(
-		chandle				main_f,
-		chandle				ud,
+		uex_run_if			run_if,
 		longint unsigned	affinity);
 		int tid_i = -1;
 		uex_thread t;
@@ -96,7 +95,7 @@ class uex_global implements uex_mem_services;
 			m_thread_l.push_back(null);
 		end
 
-		t = new(tid_i, main_f, ud, affinity);
+		t = new(tid_i, run_if, affinity);
 		m_thread_l[tid_i] = t;
 		
 		return tid_i;
@@ -212,53 +211,79 @@ class uex_global implements uex_mem_services;
 		uex_thread t = get_active_thread();
 		return m_sys[m_active.active_sys].m_cores[t.m_core];
 	endfunction
+	
+	task lock_core();
+		uex_thread t = get_active_thread();
+		_uex_mutex_lock(m_sys[m_active.active_sys].m_core_mutex_ids[t.m_core]);
+	endtask
+	
+	task unlock_core();
+		uex_thread t = get_active_thread();
+		_uex_mutex_unlock(m_sys[m_active.active_sys].m_core_mutex_ids[t.m_core]);
+	endtask
 
 	virtual task iowrite8(
 			byte unsigned data, 
 			longint unsigned addr);
+		lock_core();
 		get_active_core().iowrite8(data, addr);
+		unlock_core();
 	endtask
 	
 	virtual task ioread8(
 			output byte unsigned data, 
 			input longint unsigned addr);
+		lock_core();
 		get_active_core().ioread8(data, addr);
+		unlock_core();
 	endtask
 	
 	virtual task iowrite16(
 			shortint unsigned data, 
 			longint unsigned addr);
+		lock_core();
 		get_active_core().iowrite16(data, addr);
+		unlock_core();
 	endtask
 	
 	virtual task ioread16(
 			output shortint unsigned data, 
 			input longint unsigned addr);
+		lock_core();
 		get_active_core().ioread16(data, addr);
+		unlock_core();
 	endtask
 	
 	virtual task iowrite32(
 			int unsigned data, 
 			longint unsigned addr);
+		lock_core();
 		get_active_core().iowrite32(data, addr);
+		unlock_core();
 	endtask
 	
 	virtual task ioread32(
 			output int unsigned data, 
 			input longint unsigned addr);
+		lock_core();
 		get_active_core().ioread32(data, addr);
+		unlock_core();
 	endtask
 	
 	virtual task iowrite64(
 			longint unsigned data, 
 			longint unsigned addr);
+		lock_core();
 		get_active_core().iowrite64(data, addr);
+		unlock_core();
 	endtask
 	
 	virtual task ioread64(
 			output longint unsigned data, 
 			input longint unsigned addr);
+		lock_core();
 		get_active_core().ioread64(data, addr);
+		unlock_core();
 	endtask
 
 	virtual function longint unsigned ioalloc(
@@ -284,20 +309,25 @@ endclass
 import "DPI-C" context function int _uex_init();
 function automatic int do_uex_init();
 	// Create a representation for the main thread
-	uex_thread t = new(0, null, null, 0);
+	uex_thread t = new(0, null, 0);
 	uex_global::dflt().m_thread_l.push_back(t);
+	$display("TODO: _uex_init() called");
 		
 	return _uex_init();
 endfunction
 int _initialized = do_uex_init();
 
 function automatic int unsigned _uex_alloc_sem(int unsigned init);
-	return m_global.alloc_sem(init);
+	int unsigned ret = m_global.alloc_sem(init);
+	$display("-- alloc_sem %0d", ret);
+	return ret;
 endfunction
 export "DPI-C" function _uex_alloc_sem;
 
 function automatic void _uex_free_sem(int unsigned sem_id);
+	$display("--> free_sem(%0d)", sem_id);
 	m_global.free_sem(sem_id);
+	$display("<-- free_sem(%0d)", sem_id);
 endfunction
 export "DPI-C" function _uex_free_sem;
 
@@ -328,6 +358,8 @@ export "DPI-C" task _uex_cond_wait;
 task automatic _uex_cond_signal(
 	int unsigned		c_sem_id,
 	int unsigned		waiters);
+	$display("--> get_sem(%0d) %d\n", c_sem_id, m_global.m_semaphore_l.size());
 	m_global.get_sem(c_sem_id).put(waiters);
+	$display("<-- get_sem(%0d)\n", c_sem_id);
 endtask
 export "DPI-C" task _uex_cond_signal;

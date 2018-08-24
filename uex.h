@@ -22,17 +22,7 @@ extern "C" {
 /********************************************************************
  * Interrupts
  ********************************************************************/
-typedef void (*uex_irq_f)(void *);
-
-/**
- * uex_set_irq_handler()
- *
- * Sets a callback for the specified interrupt
- */
-void uex_set_irq_handler(
-		uint32_t 		irq,
-		uex_irq_f		f,
-		void			*ud);
+#include "uex_irq_services.h"
 
 /********************************************************************
  * Devices

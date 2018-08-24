@@ -21,6 +21,9 @@ class uex_sys implements uex_sys_main;
 	semaphore				m_irq_sem = new(1);
 	uex_mem_services		m_mem_services;
 	uex_mem_services		m_cores[$];
+	uex_irq_thread			m_irq_dispatchers[$];
+	int unsigned			m_irq_threads[$];
+	int unsigned			m_core_mutex_ids[$];
 	uex_sys_main			m_main = null;
 	
 	function new(string name="", uex_sys_main main=null);
@@ -38,14 +41,27 @@ class uex_sys implements uex_sys_main;
 	endfunction
 	
 	function void add_core(uex_mem_services core);
+		uex_irq_thread irq = new();
+		int irq_t = m_global.alloc_thread(irq, (1 << m_cores.size()));
+		int core_mutex = m_global.alloc_sem(1);
+		
 		m_cores.push_back(core);
+		m_irq_dispatchers.push_back(irq);
+		m_irq_threads.push_back(irq_t);
+		m_core_mutex_ids.push_back(core_mutex);
+		
 	endfunction
 
 	// Run 
 	task run();
-		int tid = m_global.alloc_thread(null, null, 1);
+		int tid = m_global.alloc_thread(null, 1);
 		uex_thread t = m_global.get_thread(tid);
 		process p = process::self();
+		
+		// Spawn off the dispatcher threads
+		foreach (m_irq_threads[i]) begin
+			m_global.start_thread(m_irq_threads[i]);
+		end
 		
 		m_global.set_thread_process(p, t);
 		
@@ -68,10 +84,11 @@ class uex_sys implements uex_sys_main;
 		$stop();
 	endtask
 	
-	task uex_irq(int unsigned id);
-		m_irq_sem.get(1);
-		_uex_irq(id);
-		m_irq_sem.put(1);		
+	task uex_irq(int unsigned coreid, int unsigned id);
+		// Dispatch interrupts between accesses
+//		_uex_mutex_lock(m_core_mutex_ids[coreid]);
+		m_irq_dispatchers[coreid].irq(id);
+//		_uex_mutex_unlock(m_core_mutex_ids[coreid]);
 	endtask
 	
 endclass

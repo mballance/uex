@@ -12,14 +12,19 @@ extern "C" {
 #endif
 
 /**
- * Configures the device base address (id) mapping to interrupt source id
+ * Handler-function type for global interrupts
  */
-void uex_set_irq_id(uint32_t *id, uint32_t irq);
+typedef void (*uex_irq_f)(void *);
 
 /**
- * Triggers a specific interrupt
+ * Called to set an global interrupt-handler function
  */
-void uex_trigger_irq(uint32_t irq);
+void uex_set_irq_handler(uex_irq_f handler, void *ud);
+
+/**
+ * Calls the handler for a specific device
+ */
+void uex_trigger_irq(uint32_t devid);
 
 #ifdef __cplusplus
 }
