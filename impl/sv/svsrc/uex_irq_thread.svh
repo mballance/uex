@@ -19,18 +19,15 @@ class uex_irq_thread implements uex_run_if;
 	endfunction
 
 	virtual task run();
-		$display("--> uex_irq_thread.run()");
 		forever begin
 			while (m_irq == 0) begin
 				_uex_mutex_lock(m_mutex_id);
 				_uex_cond_wait(m_cond_id, m_mutex_id);
 				_uex_mutex_unlock(m_mutex_id);
 			end
-			$display("IRQ: received an IRQ");
 			_uex_irq(m_irq_id);
 			m_irq = 0;
 		end
-		$display("<-- uex_irq_thread.run()");
 	endtask
 	
 	task irq(int irq_id);

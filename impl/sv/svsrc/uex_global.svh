@@ -319,15 +319,12 @@ int _initialized = do_uex_init();
 
 function automatic int unsigned _uex_alloc_sem(int unsigned init);
 	int unsigned ret = m_global.alloc_sem(init);
-	$display("-- alloc_sem %0d", ret);
 	return ret;
 endfunction
 export "DPI-C" function _uex_alloc_sem;
 
 function automatic void _uex_free_sem(int unsigned sem_id);
-	$display("--> free_sem(%0d)", sem_id);
 	m_global.free_sem(sem_id);
-	$display("<-- free_sem(%0d)", sem_id);
 endfunction
 export "DPI-C" function _uex_free_sem;
 
@@ -358,8 +355,6 @@ export "DPI-C" task _uex_cond_wait;
 task automatic _uex_cond_signal(
 	int unsigned		c_sem_id,
 	int unsigned		waiters);
-	$display("--> get_sem(%0d) %d\n", c_sem_id, m_global.m_semaphore_l.size());
 	m_global.get_sem(c_sem_id).put(waiters);
-	$display("<-- get_sem(%0d)\n", c_sem_id);
 endtask
 export "DPI-C" task _uex_cond_signal;

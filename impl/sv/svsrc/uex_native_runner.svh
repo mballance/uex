@@ -14,6 +14,8 @@ class uex_native_runner implements uex_run_if;
 	function new(
 		chandle			main_f,
 		chandle			ud);
+		m_main_f = main_f;
+		m_ud = ud;
 	endfunction
 	
 	virtual task run();

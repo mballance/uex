@@ -37,12 +37,16 @@ int _uex_thread_main(
 int _uex_thread_main(
 		uex_thread_f	main_f,
 		void 			*ud) {
+	fprintf(stdout, "--> uex_thread_main main_f=%p ud=%p\n", main_f, ud);
+	fflush(stdout);
 	try {
 		main_f(ud);
 	} catch (std::runtime_error &e) {
 		svAckDisabledState();
 		return 1;
 	}
+	fprintf(stdout, "<-- uex_thread_main main_f=%p ud=%p\n", main_f, ud);
+	fflush(stdout);
 	return 0;
 }
 

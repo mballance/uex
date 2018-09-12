@@ -34,6 +34,8 @@ extern "C" {
  ********************************************************************/
 #include "uex_mem_services.h"
 
+#include "uex_msg_services.h"
+
 
 
 #ifdef __cplusplus
