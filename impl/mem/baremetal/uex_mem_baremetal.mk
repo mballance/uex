@@ -8,6 +8,8 @@ UTH_MEM_BAREMETAL_SRC := $(notdir $(wildcard $(UTH_MEM_BAREMETAL_SRC_DIR)/*.c))
 
 LIBUTH_MEM := libuth_mem_baremetal.o
 
+UEX_OBJS += $(UTH_MEM_BAREMETAL_SRC:.c=.o)
+
 else
 
 $(LIBUTH_MEM) : $(UTH_MEM_BAREMETAL_SRC:.c=.o)

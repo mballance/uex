@@ -10,7 +10,7 @@
  * - uex_mutex_t
  */
 #include "uex_sys.h"
-#include <sys/types.h>
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -1,5 +1,4 @@
 
-#include <sys/types.h>
 #include <stdint.h>
 
 #ifdef __cplusplus
@@ -31,8 +30,8 @@ typedef void (*uex_dev_irq_f)(struct uex_dev_s *dev);
  * Defines
  */
 typedef struct uex_dev_api_s {
-	int (*write)(struct uex_dev_s *dev, void *data, size_t sz, int flags);
-	int (*read)(struct uex_dev_s *dev, void *data, size_t sz, int flags);
+	int (*write)(struct uex_dev_s *dev, void *data, uint32_t sz, int flags);
+	int (*read)(struct uex_dev_s *dev, void *data, uint32_t sz, int flags);
 	int (*ioctl)(struct uex_dev_s *dev, uint32_t cmd, void *arg);
 } uex_dev_api_t;
 

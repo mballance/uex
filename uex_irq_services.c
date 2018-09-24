@@ -5,7 +5,6 @@
 #include "uex_msg_services.h"
 #include "uex_dev_services.h"
 #include "uex_config.h"
-#include <stdio.h>
 
 
 void uex_trigger_irq(uint32_t devid) {
@@ -14,9 +13,9 @@ void uex_trigger_irq(uint32_t devid) {
 		if (dev->irq) {
 			dev->irq(dev);
 		} else {
-			fprintf(stdout, "Error: irq not registered for devid=%d\n", devid);
+			uex_error(0, "Error: irq not registered for devid=%d", devid);
 		}
 	} else {
-		fprintf(stdout, "Error: devid %d is invalid\n", devid);
+		uex_error(0, "Error: devid %d is invalid", devid);
 	}
 }
