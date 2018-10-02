@@ -69,6 +69,14 @@ void uex_cond_wait(uex_cond_t *c, uex_mutex_t *m);
 
 void uex_cond_signal(uex_cond_t *c);
 
+void uex_cond_signal_async(uex_cond_t *c);
+
+void uex_event_init(uex_event_t *e);
+
+void uex_event_signal(uex_event_t *e);
+
+void uex_event_wait(uex_event_t *e);
+
 #ifdef __cplusplus
 }
 #endif

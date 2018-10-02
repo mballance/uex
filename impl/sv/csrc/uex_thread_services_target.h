@@ -21,5 +21,9 @@ typedef struct uex_cond_s {
 	uint32_t			waiters;
 } uex_cond_t;
 
+typedef struct uex_event_s {
+	uint32_t			sem_id;
+} uex_event_t;
+
 
 #endif /* IMPL_SV_UEX_THREAD_SERVICES_TARGET_H_ */

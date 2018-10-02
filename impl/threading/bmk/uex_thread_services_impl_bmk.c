@@ -2,38 +2,32 @@
  * uex_sys_uth.c
  ****************************************************************************/
 #include "uex_thread_services.h"
+#include "uex_msg_services.h"
 #include "bmk.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct stack_s {
-	uint8_t				stk[4096];
+typedef struct thread_data_s {
+	uint8_t					stk[16384];
+	bmk_thread_t			thread;
 
-	uex_thread_f		main_f;
-	void				*ud;
+	uex_thread_f			main_f;
+	void					*ud;
 
-	struct stack_s		*next;
-} stack_t;
+	struct thread_data_s	*next;
+} thread_data_t;
 
 // TODO: need to mutex this
 // static bmk_mutex_t		pool_mutex = bmk_MU
-static stack_t			*stack_pool = 0;
-static bmk_thread_t		*thread_pool = 0;
+static thread_data_t	*thread_data_pool = 0;
 
 static int uex_thread_tramp(void *ud) {
-	stack_t *stk = (stack_t *)ud;
-	bmk_thread_t *t = bmk_thread_self();
+	thread_data_t *td = (thread_data_t *)ud;
 	int ret;
 
-	ret = stk->main_f(stk->ud);
+	ret = td->main_f(td->ud);
 
-	// TODO: must mutex
-	// Free stack and thread
-	stk->next = stack_pool;
-	stack_pool = stk;
-	t->next = thread_pool;
-	thread_pool = t;
 
 	return ret;
 }
@@ -41,30 +35,31 @@ static int uex_thread_tramp(void *ud) {
 uex_thread_t uex_thread_create(
 	uex_thread_f		main_f,
 	void				*ud) {
-	bmk_thread_t 	*t;
-	stack_t			*stk;
+	thread_data_t	*td;
 
-	if (stack_pool) {
-		stk = stack_pool;
-		stack_pool = stack_pool->next;
+	if (thread_data_pool) {
+		td = thread_data_pool;
+		thread_data_pool = thread_data_pool->next;
 	} else {
-		stk = (stack_t *)malloc(sizeof(stack_t));
+		td = (thread_data_t *)malloc(sizeof(thread_data_t));
 	}
-	if (thread_pool) {
-		t = thread_pool;
-		thread_pool = thread_pool->next;
-	} else {
-		t = (bmk_thread_t *)malloc(sizeof(bmk_thread_t));
-	}
+	td->main_f = main_f;
+	td->ud = ud;
+	td->next = 0;
 
 	bmk_thread_init(
-			t,
-			stk->stk,
-			4096,
+			&td->thread,
+			td->stk,
+			sizeof(td->stk),
 			&uex_thread_tramp,
-			stk);
+			td);
 
-	return t;
+	return &td->thread;
+}
+
+int uex_thread_join(uex_thread_t t) {
+	bmk_thread_join(t);
+	return 0;
 }
 
 uex_thread_t uex_thread_self(void) {
@@ -95,7 +90,31 @@ void uex_cond_signal(uex_cond_t *c) {
 	bmk_cond_signal(c);
 }
 
+void uex_cond_signal_async(uex_cond_t *c) {
+	bmk_cond_signal_async(c);
+}
+
+void uex_event_init(uex_event_t *e) {
+	bmk_event_init(e);
+}
+
+void uex_event_wait(uex_event_t *e) {
+	bmk_event_wait(e);
+}
+
+void uex_event_signal(uex_event_t *e) {
+	bmk_event_signal(e);
+}
+
 void uex_yield(void) {
 	bmk_thread_yield();
+}
+
+// Callback from BMK notifying that the thread is free
+void bmk_thread_free(bmk_thread_t *t) {
+	// TODO: must mutex
+	// Free stack and thread
+	t->next = thread_data_pool;
+	thread_data_pool = t;
 }
 

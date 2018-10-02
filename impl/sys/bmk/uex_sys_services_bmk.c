@@ -21,7 +21,11 @@ void uex_set_irq_handler(uex_irq_f handler, void *ud) {
 	prv_ud = ud;
 
 	bmk_sys_set_irq_handler(&uex_bmk_handler);
-	bmk_sys_enable_interrupts(handler != 0);
+	if (handler) {
+		bmk_sys_enable_interrupts();
+	} else {
+		bmk_sys_disable_interrupts();
+	}
 }
 
 

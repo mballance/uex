@@ -179,5 +179,18 @@ void uex_cond_signal(uex_cond_t *c) {
 	}
 }
 
+void uex_event_init(uex_event_t *e) {
+	svSetScope(uex_svScope());
+	e->sem_id = _uex_alloc_sem(0);
+}
+
+void uex_event_wait(uex_event_t *e) {
+	// TODO:
+}
+
+void uex_event_signal(uex_event_t *e) {
+	// TODO:
+}
+
 
 

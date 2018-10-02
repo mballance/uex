@@ -58,7 +58,7 @@ typedef struct uex_dev_s {
  .name = __name, \
  .addr = (void *)__base_addr, \
  .init = &(__init), \
- .irq = 0, \
+ .irq = 0 \
 }
 
 //typedef struct uex_devtree_s {
