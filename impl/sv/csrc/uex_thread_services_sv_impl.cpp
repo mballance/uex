@@ -28,6 +28,9 @@ uint32_t _uex_thread_self(void);
 int _uex_thread_main(
 		uex_thread_f	main_f,
 		void 			*ud);
+int _uex_event_wait(uint32_t sem_id);
+int _uex_event_signal(uint32_t sem_id);
+
 #ifdef __cplusplus
 }
 #endif
@@ -181,15 +184,48 @@ void uex_cond_signal(uex_cond_t *c) {
 
 void uex_event_init(uex_event_t *e) {
 	svSetScope(uex_svScope());
-	e->sem_id = _uex_alloc_sem(0);
+	e->sem_id = -1;
+	e->sem_refcnt = 0;
 }
 
 void uex_event_wait(uex_event_t *e) {
-	// TODO:
+	if (e->sem_id == 0) {
+		fprintf(stdout, "Error: uex_event_wait - sem_id==0\n");
+		e->sem_id = _uex_alloc_sem(0);
+		e->sem_refcnt = 0;
+	}
+	if (e->sem_id == -1) {
+		e->sem_id = _uex_alloc_sem(0);
+		e->sem_refcnt = 0;
+	}
+	e->sem_refcnt++;
+	if (_uex_event_wait(e->sem_id)) {
+		svAckDisabledState();
+		throw std::runtime_error("uex_event_wait");
+	}
+	e->sem_refcnt--;
+
+	if (e->sem_refcnt == 0) {
+		_uex_free_sem(e->sem_id);
+		e->sem_id = -1;
+	}
 }
 
 void uex_event_signal(uex_event_t *e) {
-	// TODO:
+	if (e->sem_id == 0) {
+		fprintf(stdout, "Error: uex_event_signal - sem_id==0\n");
+		e->sem_id = _uex_alloc_sem(0);
+		e->sem_refcnt = 0;
+	}
+
+	if (e->sem_id == -1) {
+		e->sem_id = _uex_alloc_sem(0);
+	}
+
+	if (_uex_event_signal(e->sem_id)) {
+		svAckDisabledState();
+		throw std::runtime_error("uex_event_signal");
+	}
 }
 
 

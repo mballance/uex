@@ -121,7 +121,7 @@ class uex_global implements uex_mem_services;
 	
 		s = new(init);
 		m_semaphore_l[sem_i-1] = s;
-		
+
 		return sem_i;
 	endfunction
 	
@@ -358,3 +358,14 @@ task automatic _uex_cond_signal(
 	m_global.get_sem(c_sem_id).put(waiters);
 endtask
 export "DPI-C" task _uex_cond_signal;
+
+task automatic _uex_event_wait(int unsigned	e_sem_id);
+	m_global.get_sem(e_sem_id).get(1);
+endtask
+export "DPI-C" task _uex_event_wait;
+
+task automatic _uex_event_signal(int unsigned	e_sem_id);
+	m_global.get_sem(e_sem_id).put(1);
+endtask
+export "DPI-C" task _uex_event_signal;
+

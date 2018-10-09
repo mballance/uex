@@ -22,7 +22,8 @@ typedef struct uex_cond_s {
 } uex_cond_t;
 
 typedef struct uex_event_s {
-	uint32_t			sem_id;
+	int32_t				sem_id;
+	uint32_t			sem_refcnt;
 } uex_event_t;
 
 

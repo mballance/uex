@@ -115,6 +115,6 @@ void bmk_thread_free(bmk_thread_t *t) {
 	// TODO: must mutex
 	// Free stack and thread
 	t->next = thread_data_pool;
-	thread_data_pool = t;
+	thread_data_pool = (thread_data_t *)t;
 }
 
